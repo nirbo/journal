@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 {% extends "journal/base.html" %}
     {% block body_block %}
-        <h1>Add Server</h1>
         <div class="container">
-            <form method="POST">
-                {{ add_server_form.as_p }}
-                {% csrf_token %}
-                <p><input class="btn btn-primary" type="submit" value="Add Server"></p>
-            </form>
+            <div class="jumbotron">
+                <h1>Add Server</h1>
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ add_server_form.as_p }}
+                    <input class="btn btn-primary" type="submit" value="Add Server">
+                </form>
+            </div>
         </div>
     {% endblock %}
