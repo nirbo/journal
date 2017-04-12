@@ -1,5 +1,5 @@
 from django import forms
-from journal.models import Server, Location
+from journal.models import Server, Location, Owner
 
 
 class AddServerForm(forms.ModelForm):
@@ -11,8 +11,10 @@ class AddServerForm(forms.ModelForm):
                                                   widget=forms.TextInput(attrs={'class': "form-control"}))
     server_data2_ip = forms.GenericIPAddressField(label='Data Network 2', protocol='ipv4',
                                                   widget=forms.TextInput(attrs={'class': "form-control"}))
-    server_owner = forms.CharField(label='Server Owner',
-                                   widget=forms.TextInput(attrs={'class': "form-control"}))
+    server_owner = forms.ModelChoiceField(label='Server Owner',
+                                          queryset=Owner.objects.all(),
+                                          empty_label='Select Owner Name',
+                                          widget=forms.Select(attrs={'class': "form-control"}))
     server_location = forms.ModelChoiceField(label='Server Location',
                                              queryset=Location.objects.all(),
                                              empty_label='Select Server Location',
