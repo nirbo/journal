@@ -1,12 +1,11 @@
 from django import forms
-from django.core import validators
 from journal.models import Server, Location
 
 
 class AddServerForm(forms.ModelForm):
     server_name = forms.CharField(label='Server Name',
                                   widget=forms.TextInput(attrs={'class': "form-control"}))
-    server_mgmt_ip = forms.GenericIPAddressField(label='MGMT IP', protocol='ipv4',
+    server_mgmt_ip = forms.GenericIPAddressField(label='Management IP', protocol='ipv4',
                                                  widget=forms.TextInput(attrs={'class': "form-control"}))
     server_data1_ip = forms.GenericIPAddressField(label='Data Network 1', protocol='ipv4',
                                                   widget=forms.TextInput(attrs={'class': "form-control"}))

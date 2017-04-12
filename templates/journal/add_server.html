@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 {% extends "journal/base.html" %}
     {% block body_block %}
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'css/add_server.css' %}">
         <div class="container">
             <div class="jumbotron">
                 <h1>Add Server</h1>
                 <form method="POST">
                     {% csrf_token %}
                     {{ add_server_form.as_p }}
-                    <input class="btn btn-primary" type="submit" value="Add Server">
+                    <input id="add_server_button" class="btn btn-primary" type="submit" value="Add Server">
                 </form>
             </div>
         </div>
