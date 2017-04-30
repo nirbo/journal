@@ -10,14 +10,16 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-inverse bg-inverse navbar-toggleable-sm">
-        <a class="navbar-brand" href="{% url 'journal:index' %}">Journal Home</a>
+    <nav class="navbar navbar-default navbar-inverse bg-inverse navbar-toggleable-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'journal:index' %}">Journal Home</a>
 
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'journal:add_server_form' %}">Add Server</a>
-            </li>
-        </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'journal:add_server_form' %}">Add Server</a>
+                </li>
+            </ul>
+        </div>
     </nav>
 
     <div class="container">

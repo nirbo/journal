@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'journal.apps.JournalConfig',
+    'bootstrap3',
 ]
 
 MIDDLEWARE = [

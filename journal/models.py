@@ -4,12 +4,13 @@ from django.db import models
 # Create your models here.
 
 class Server(models.Model):
-    server_name = models.CharField(max_length=64, unique=True)
-    server_mgmt_ip = models.GenericIPAddressField(blank=True, null=True, protocol='IPv4')
-    server_data1_ip = models.GenericIPAddressField(blank=True, null=True, protocol='IPv4')
-    server_data2_ip = models.GenericIPAddressField(blank=True, null=True, protocol='IPv4')
-    server_owner = models.ForeignKey('Owner')
-    server_location = models.ForeignKey('Location')
+    name = models.CharField(max_length=64, unique=True)
+    mgmt_IP = models.GenericIPAddressField(blank=True, null=True, protocol='IPv4')
+    data_IP_1 = models.GenericIPAddressField(blank=True, null=True, protocol='IPv4')
+    data_IP_2 = models.GenericIPAddressField(blank=True, null=True, protocol='IPv4')
+    bmc_IP = models.GenericIPAddressField(blank=True, null=True, protocol='IPv4')
+    owner = models.ForeignKey('Owner')
+    location = models.ForeignKey('Location')
 
     def __str__(self):
         return self.server_name
