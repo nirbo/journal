@@ -1,6 +1,8 @@
 from django.shortcuts import render
+from django_tables2 import RequestConfig
 from journal.forms import AddServerForm
 from journal.models import Server, Location, Owner
+from journal.tables import ServerTable
 
 
 # Create your views here.
@@ -27,6 +29,7 @@ def add_server_form_view(request):
 
 
 def show_servers(request):
-    server_list = {'lab_servers': Server.objects.order_by('name')}
+    table = ServerTable(Server.objects.order_by('name'))
+    RequestConfig(request, paginate={'per_page': 25}).configure(table)
 
-    return render(request, 'journal/show_servers.html', context=server_list)
+    return render(request, 'journal/show_servers.html', {'servers_table': table})

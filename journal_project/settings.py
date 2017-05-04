@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'journal.apps.JournalConfig',
     'bootstrap3',
+    'django_tables2',
 ]
 
 MIDDLEWARE = [
