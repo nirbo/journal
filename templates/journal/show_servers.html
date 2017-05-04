@@ -1,0 +1,43 @@
+{% extends "journal/base.html" %}
+
+<!DOCTYPE html>
+    {% block body_block %}
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'css/show_servers.css' %}">
+
+        <div class="container">
+            <div class="jumbotron">
+                <h1>Lab Servers</h1>
+
+                <div class="servers_table">
+                    {% if lab_servers %}
+                        <table class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <th>Name</th>
+                                <th>MGMT IP</th>
+                                <th>Data IP 1</th>
+                                <th>Data IP 2</th>
+                                <th>BMC IP</th>
+                                <th>Owner</th>
+                                <th>Location</th>
+                            </thead>
+
+                            {% for server in lab_servers %}
+                                <tr>
+                                    <td>{{ server.name }}</td>
+                                    <td>{{ server.mgmt_IP }}</td>
+                                    <td>{{ server.data_IP_1 }}</td>
+                                    <td>{{ server.data_IP_2 }}</td>
+                                    <td>{{ server.bmc_IP }}</td>
+                                    <td>{{ server.owner }}</td>
+                                    <td>{{ server.location }}</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    {% else %}
+                        <p>No Servers Found!</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endblock %}

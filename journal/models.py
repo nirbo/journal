@@ -5,15 +5,15 @@ from django.db import models
 
 class Server(models.Model):
     name = models.CharField(max_length=64, unique=True)
-    mgmt_IP = models.GenericIPAddressField(blank=True, null=True, protocol='IPv4')
-    data_IP_1 = models.GenericIPAddressField(blank=True, null=True, protocol='IPv4')
-    data_IP_2 = models.GenericIPAddressField(blank=True, null=True, protocol='IPv4')
-    bmc_IP = models.GenericIPAddressField(blank=True, null=True, protocol='IPv4')
+    mgmt_IP = models.GenericIPAddressField(blank=True, unique=True, null=True, protocol='IPv4')
+    data_IP_1 = models.GenericIPAddressField(blank=True, unique=True, null=True, protocol='IPv4')
+    data_IP_2 = models.GenericIPAddressField(blank=True, unique=True, null=True, protocol='IPv4')
+    bmc_IP = models.GenericIPAddressField(blank=True, unique=True, null=True, protocol='IPv4')
     owner = models.ForeignKey('Owner')
     location = models.ForeignKey('Location')
 
     def __str__(self):
-        return self.server_name
+        return self.name
 
 
 class Location(models.Model):
