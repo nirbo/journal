@@ -16,6 +16,8 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STATIC_DIR = os.path.join(BASE_DIR, "static")
 STATIC_CSS = os.path.join(STATIC_DIR, "css")
+TEMPLATE_DIR = os.path.join(BASE_DIR, "templates")
+JOURNAL_TEMPLATES_DIR = os.path.join(TEMPLATE_DIR, 'journal')
 
 
 # Quick-start development settings - unsuitable for production
@@ -41,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'journal.apps.JournalConfig',
     'bootstrap3',
+    'bootstrap_pagination',
     'django_tables2',
 ]
 
@@ -128,3 +131,5 @@ STATICFILES_DIRS = [
     STATIC_DIR,
     STATIC_CSS,
 ]
+
+DJANGO_TABLES2_TEMPLATE = os.path.join(JOURNAL_TEMPLATES_DIR, 'server_table_template.html')

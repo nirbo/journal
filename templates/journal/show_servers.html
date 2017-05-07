@@ -1,6 +1,7 @@
 {% extends "journal/base.html" %}
 {% load render_table from django_tables2 %}
 
+
 <!DOCTYPE html>
     {% block body_block %}
         {% load static %}
@@ -9,7 +10,9 @@
         <div class="container">
             <div class="jumbotron">
                 <h1>Lab Servers</h1>
-                {% render_table servers_table %}
+                {% block content %}
+                    {% render_table servers_table %}
+                {% endblock %}
             </div>
         </div>
     {% endblock %}
