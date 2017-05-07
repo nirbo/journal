@@ -1,8 +1,13 @@
 h1 {
-    margin-bottom: 5%;
     font-weight: bold;
 }
 
-#add_server_button {
-    margin-top: 2.5%;
+.separator {
+    background-color: #8c8c8c;
+    height: 1px;
+    margin-bottom: 4%;
+}
+
+.add_server_button {
+    margin-top: 2%;
 }
