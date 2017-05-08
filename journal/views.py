@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django_tables2 import RequestConfig
 from journal.forms import AddServerForm
 from journal.models import Server, Location, Owner
@@ -19,7 +19,7 @@ def add_server_form_view(request):
 
         if form.is_valid():
             form.save(commit=True)
-            return render(request, 'journal/index.html')
+            return redirect('/journal')
         else:
             print("ERROR: Invalid Form")
     else:
@@ -30,6 +30,6 @@ def add_server_form_view(request):
 
 def show_servers(request):
     table = ServerTable(Server.objects.order_by('name'))
-    RequestConfig(request, paginate={'per_page': 25}).configure(table)
+    RequestConfig(request).configure(table)
 
     return render(request, 'journal/show_servers.html', {'servers_table': table})
