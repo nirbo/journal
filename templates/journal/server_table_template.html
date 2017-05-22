@@ -22,30 +22,38 @@
                 <th {{ column.attrs.th.as_html }}>{{ column.header|upper }}</th>
             {% endif %}
         {% endfor %}
+            <th>ACTIONS</th>
         </tr>
     </thead>
     {% endblock table.thead %}
+
     {% block table.tbody %}
     <tbody>
-        {% for row in table.page.object_list|default:table.rows %} {# support pagination #}
-        {% block table.tbody.row %}
-        <tr class="{% cycle "odd" "even" %}">
-            {% for column, cell in row.items %}
-                <td {{ column.attrs.td.as_html }}>{{ cell }}</td>
-            {% endfor %}
-        </tr>
-        {% endblock table.tbody.row %}
-        {% empty %}
-        {% if table.empty_text %}
-        {% block table.tbody.empty_text %}
-        <tr><td colspan="{{ table.columns|length }}">{{ table.empty_text }}</td></tr>
-        {% endblock table.tbody.empty_text %}
-        {% endif %}
+        {% for row in table.page.object_list|default:table.rows %}
+            {% block table.tbody.row %}
+            <tr class="{% cycle "odd" "even" %}">
+                {% for column, cell in row.items %}
+                    <td {{ column.attrs.td.as_html }}>{{ cell }}</td>
+                {% endfor %}
+                <td>
+                    <span class="edit-row glyphicon glyphicon-edit"></span>
+                    <span class="delete-row glyphicon glyphicon-remove"></span>
+                </td>
+            </tr>
+            {% endblock table.tbody.row %}
+
+            {% empty %}
+            {% if table.empty_text %}
+                {% block table.tbody.empty_text %}
+                    <tr><td colspan="{{ table.columns|length }}">{{ table.empty_text }}</td></tr>
+                {% endblock table.tbody.empty_text %}
+            {% endif %}
         {% endfor %}
     </tbody>
     {% endblock table.tbody %}
+
     {% block table.tfoot %}
-    <tfoot></tfoot>
+        <tfoot></tfoot>
     {% endblock table.tfoot %}
 </table>
 {% endblock table %}

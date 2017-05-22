@@ -1,15 +1,6 @@
-#server-table thead tr:first-child th:first-child,
-#server-table tbody tr td:first-child {
+#server-table > thead > tr:first-child > th:first-child,
+#server-table > tbody > tr > td:first-child {
     display: none;
-}
-
-th {
-    background-color: lightskyblue;
-    color: black;
-}
-
-a {
-    color: black;
 }
 
 .table-striped > tbody > tr:nth-child(even) > td,
@@ -20,4 +11,24 @@ a {
 .table-hover tbody tr:hover td,
 .table-hover tbody tr:hover th {
     background-color: darkkhaki;
+}
+
+.edit-row {
+    color: #3c3c3c;
+    margin: 0 5%;
+}
+
+.delete-row {
+    color: red;
+    margin: 0 10%;
+
+}
+
+th {
+    background-color: lightskyblue;
+    color: #3c3c3c;
+}
+
+a {
+    color: #3c3c3c;
 }
