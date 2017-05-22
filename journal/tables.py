@@ -6,5 +6,4 @@ class ServerTable(tables.Table):
     class Meta:
         model = Server
         attrs = {'class': 'table table-striped table-bordered table-hover'}
-        fields = ('name', 'mgmt_IP', 'data_IP_1', 'data_IP_2', 'bmc_IP', 'owner', 'location')
         per_page = 25

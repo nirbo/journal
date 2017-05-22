@@ -1,3 +1,8 @@
+#server-table thead tr:first-child th:first-child,
+#server-table tbody tr td:first-child {
+    display: none;
+}
+
 th {
     background-color: lightskyblue;
     color: black;
