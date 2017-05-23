@@ -1,0 +1,26 @@
+{% extends "journal/base.html" %}
+{% load bootstrap3 %}
+
+<!DOCTYPE html>
+    {% block body_block %}
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'css/edit_server.css' %}">
+
+        <div class="container">
+            <div class="jumbotron">
+                <h1>Edit Server</h1>
+                <hr class="separator">
+
+                <form method="POST" action="{% url 'journal:save_server' id %}">
+                    {% csrf_token %}
+                    {% bootstrap_form edit_server_form %}
+
+                    {% buttons %}
+                    <button type="submit" class="btn btn-primary edit_server_button">
+                        {% bootstrap_icon "edit" %} Save Changes
+                    </button>
+                    {% endbuttons %}
+                </form>
+            </div>
+        </div>
+    {% endblock %}

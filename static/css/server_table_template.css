@@ -21,7 +21,14 @@
 .delete-row {
     color: red;
     margin: 0 10%;
+}
 
+tbody tr {
+    font-size: 14px;
+}
+
+span {
+    text-align: center;
 }
 
 th {
@@ -29,6 +36,8 @@ th {
     color: #3c3c3c;
 }
 
-a {
-    color: #3c3c3c;
+a,a:hover,a:link,a:visited,a:active {
+    text-decoration: none;
+    outline: none;
+    border: none;
 }
