@@ -5,27 +5,25 @@ from journal.models import Server, Location, Owner
 from journal.tables import ServerTable
 
 
-# Create your views here.
-
 def index(request):
     return render(request, 'journal/index.html')
 
 
 def add_server_form_view(request):
-    add_server_form = AddServerForm()
-
     if request.method == 'POST':
-        form = AddServerForm(request.POST)
+        add_server_form = AddServerForm(request.POST)
 
-        if form.is_valid():
-            form.save(commit=True)
+        if add_server_form.is_valid():
+            add_server_form.save(commit=True)
             return redirect('/journal')
         else:
-            print("ERROR: Invalid Form")
+            print(add_server_form.errors)
     else:
         add_server_form = AddServerForm()
 
-    return render(request, 'journal/add_server.html', {'add_server_form': add_server_form})
+    context = {'add_server_form': add_server_form}
+
+    return render(request, 'journal/add_server.html', context)
 
 
 def show_servers(request):
