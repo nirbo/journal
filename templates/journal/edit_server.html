@@ -11,7 +11,8 @@
                 <h1>Edit Server</h1>
                 <hr class="separator">
 
-                <form method="POST" action="{% url 'journal:save_server' id %}">
+{#                <form method="POST" action="{% url 'journal:save_server' id %}">#}
+                    <form method="POST">
                     {% csrf_token %}
                     {% bootstrap_form edit_server_form %}
 

@@ -43,27 +43,16 @@ def delete_server_form_view(request, id):
 
 def edit_server_form_view(request, id):
     server_to_edit = Server.objects.get(id=id)
-    edit_server_form = EditServerForm(instance=server_to_edit)
+    edit_server_form = EditServerForm(request.POST or None, instance=server_to_edit)
+
+    if request.method == 'POST':
+        if edit_server_form.is_valid():
+            edit_server_form.save()
+            return redirect('/journal/show_servers/')
+    else:
+        edit_server_form = EditServerForm(instance=server_to_edit)
+
     context = {'edit_server_form': edit_server_form,
                'id': id}
 
     return render(request, 'journal/edit_server.html', context)
-
-
-def save_server(request, id):
-    server = Server.objects.get(id=id)
-
-    server.name = request.POST['name']
-    server.mgmt_IP = request.POST['mgmt_IP']
-    server.data_IP_1 = request.POST['data_IP_1']
-    server.data_IP_2 = request.POST['data_IP_2']
-    server.bmc_IP = request.POST['bmc_IP']
-    server.owner = Owner.objects.get(id=request.POST['owner'])
-    server.location = Location.objects.get(id=request.POST['location'])
-
-    server.save()
-
-    return redirect('/journal/show_servers/')
-
-
-
