@@ -1,4 +1,5 @@
 from django import forms
+from django.db.models import Q
 from journal.models import Server, Location, Owner
 
 
@@ -13,45 +14,39 @@ class EditServerForm(forms.ModelForm):
         model = Server
         fields = '__all__'
 
-    ip_field_keys = (
-        'mgmt_IP',
-        'data_IP_1',
-        'data_IP_2',
-        'bmc_IP',
-    )
+    def clean_mgmt_IP(self):
+        clean_data = self.cleaned_data
+        self.validate_duplicates(clean_data.get('name'),
+                                 clean_data.get('mgmt_IP'))
 
-    def clean(self):
-        cleaned_data = super(EditServerForm, self).clean()
-        form_ips = self.get_form_ip_values(cleaned_data, self.ip_field_keys)
-        form_server_name = self.get_form_name_value(cleaned_data)
-        all_servers = Server.objects.defer('name', 'owner', 'location')
+        return clean_data.get('mgmt_IP')
 
-        for server in all_servers:
-            current = self.get_server_ips(server, self.ip_field_keys)
+    def clean_data_IP_1(self):
+        clean_data = self.cleaned_data
+        self.validate_duplicates(clean_data.get('name'),
+                                 clean_data.get('data_IP_1'))
 
-            for field, ip_address in form_ips.items():
-                if form_server_name != server.name:
-                    if ip_address in current:
-                        raise forms.ValidationError(
-                            {field: ["ERROR: The IP {} is in use by another server.".format(ip_address), ]},
-                            code='DuplicateIP')
+        return clean_data.get('data_IP_1')
 
-    def get_form_ip_values(self, clean_data, ip_fields):
-        ip_list = {}
+    def clean_data_IP_2(self):
+        clean_data = self.cleaned_data
+        self.validate_duplicates(clean_data.get('name'),
+                                 clean_data.get('data_IP_2'))
 
-        for field_name in ip_fields:
-            ip_list[field_name] = clean_data.get(field_name)
+        return clean_data.get('data_IP_2')
 
-        return ip_list
+    def clean_bmc_IP(self):
+        clean_data = self.cleaned_data
+        self.validate_duplicates(clean_data.get('name'),
+                                 clean_data.get('bmc_IP'))
 
-    def get_form_name_value(self, clean_data):
-        return clean_data.get('name')
+        return clean_data.get('bmc_IP')
 
-    def get_server_ips(self, server, ip_fields):
-        server_ips = []
+    def validate_duplicates(self, form_server_name, field_value):
+        db_servers = Server.objects.exclude(name__exact=form_server_name)
 
-        for field_name in ip_fields:
-            server_ips.append(getattr(server, field_name))
-
-        return server_ips
-
+        db_values = list(db_servers.values_list())
+        for record in db_values:
+            if field_value in record:
+                print("{} Found".format(field_value))
+                raise forms.ValidationError("The IP {} is in use by another server.".format(field_value))
