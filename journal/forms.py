@@ -1,5 +1,4 @@
 from django import forms
-from django.db.models import Q
 from journal.models import Server, Location, Owner
 
 
@@ -44,9 +43,8 @@ class EditServerForm(forms.ModelForm):
 
     def validate_duplicates(self, form_server_name, field_value):
         db_servers = Server.objects.exclude(name__exact=form_server_name)
-
         db_values = list(db_servers.values_list())
+        
         for record in db_values:
             if field_value in record:
-                print("{} Found".format(field_value))
                 raise forms.ValidationError("The IP {} is in use by another server.".format(field_value))
