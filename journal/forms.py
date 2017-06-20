@@ -7,6 +7,62 @@ class AddServerForm(forms.ModelForm):
         model = Server
         fields = '__all__'
 
+    def clean_name(self):
+        clean_data = self.cleaned_data
+        form_field_name = clean_data['name']
+
+        if self.does_record_exist(form_field_name):
+            raise forms.ValidationError("The name '{}' is already in use by another server".format(form_field_name))
+
+        return form_field_name
+
+    def clean_mgmt_IP(self):
+        clean_data = self.cleaned_data
+        form_field_ip = clean_data['mgmt_IP']
+
+        if self.does_record_exist(form_field_ip):
+            raise forms.ValidationError("The IP address '{}' is already in use by another server".format(form_field_ip))
+
+        return form_field_ip
+
+    def clean_data_IP_1(self):
+        clean_data = self.cleaned_data
+        form_field_ip = clean_data['data_IP_1']
+
+        if self.does_record_exist(form_field_ip):
+            raise forms.ValidationError("The IP address '{}' is already in use by another server".format(form_field_ip))
+
+        return form_field_ip
+
+    def clean_data_IP_2(self):
+        clean_data = self.cleaned_data
+        form_field_ip = clean_data['data_IP_2']
+
+        if self.does_record_exist(form_field_ip):
+            raise forms.ValidationError("The IP address '{}' is already in use by another server".format(form_field_ip))
+
+        return form_field_ip
+
+    def clean_bmc_IP(self):
+        clean_data = self.cleaned_data
+        form_field_ip = clean_data['bmc_IP']
+
+        if self.does_record_exist(form_field_ip):
+            raise forms.ValidationError("The IP address '{}' is already in use by another server".format(form_field_ip))
+
+        return form_field_ip
+
+    def does_record_exist(self, check_value):
+        db_values = self.query_entire_db()
+
+        for record in db_values:
+            if check_value in record.values():
+                return True
+
+        return False
+
+    def query_entire_db(self):
+        return list(Server.objects.all().values())
 
 class EditServerForm(forms.ModelForm):
     class Meta:
@@ -98,7 +154,7 @@ class EditServerForm(forms.ModelForm):
 
         for record in db_values:
             if field_value in record.values():
-                raise forms.ValidationError("The IP address '{}' is already in use by another server.".format(field_value))
+                raise forms.ValidationError("The IP address '{}' is already in use by another server".format(field_value))
 
     def query_db_exclude_name(self, excluded_name):
         return Server.objects.exclude(name__exact=excluded_name).values()

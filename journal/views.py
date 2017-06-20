@@ -15,7 +15,7 @@ def add_server_form_view(request):
 
         if add_server_form.is_valid():
             add_server_form.save(commit=True)
-            return redirect('/journal')
+            return redirect('/journal/show_servers/')
         else:
             print(add_server_form.errors)
     else:
@@ -35,8 +35,7 @@ def show_servers(request):
 
 
 def delete_server_form_view(request, id):
-    server_to_delete = Server.objects.get(id=id)
-    server_to_delete.delete()
+    Server.objects.get(id=id).delete()
 
     return redirect('/journal/show_servers/')
 
