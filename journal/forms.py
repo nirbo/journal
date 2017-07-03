@@ -64,6 +64,7 @@ class AddServerForm(forms.ModelForm):
     def query_entire_db(self):
         return list(Server.objects.all().values())
 
+
 class EditServerForm(forms.ModelForm):
     class Meta:
         model = Server

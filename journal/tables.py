@@ -7,3 +7,4 @@ class ServerTable(tables.Table):
         model = Server
         attrs = {'class': 'table table-striped table-bordered table-hover'}
         per_page = 25
+        empty_text = "No servers were found."

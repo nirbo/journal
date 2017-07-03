@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load staticfiles %}
+{% load bootstrap3 %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -29,6 +30,17 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'journal:show_servers' %}">Show Servers</a>
                 </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <form class="navbar-form navbar-left navbar-input-group" id="search-form" method="POST" role="search" action="{% url 'journal:search' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="search" placeholder="Search" value="{{ search_term }}">
+                        <button class="btn btn-default" type="submit">
+                            {% bootstrap_icon "search" %}
+                        </button>
+                    </div>
+                </form>
             </ul>
         </div>
     </nav>

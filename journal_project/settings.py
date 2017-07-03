@@ -122,7 +122,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
@@ -133,3 +132,4 @@ STATICFILES_DIRS = [
 ]
 
 DJANGO_TABLES2_TEMPLATE = os.path.join(JOURNAL_TEMPLATES_DIR, 'server_table_template.html')
+
