@@ -36,8 +36,13 @@
                     <td {{ column.attrs.td.as_html }}>{{ cell }}</td>
                 {% endfor %}
                 <td>
-                    <span class="actions-span"><a href="/journal/editServer/{{ row.record.id }}" class="edit-row fa fa-edit"></a></span>
-                    <span class="actions-span"><a href="/journal/deleteServer/{{ row.record.id }}" class="delete-row fa fa-remove"></a></span>
+                    {% if '/search/' in request.get_full_path %}
+                        <span class="actions-span"><a href="/journal/editServer/{{ row.record.id }}?next={{ search_term }}" class="edit-row fa fa-edit"></a></span>
+                        <span class="actions-span"><a href="/journal/deleteServer/{{ row.record.id }}?next={{ search_term }}" class="delete-row fa fa-remove"></a></span>
+                    {% else %}
+                        <span class="actions-span"><a href="/journal/editServer/{{ row.record.id }}" class="edit-row fa fa-edit"></a></span>
+                        <span class="actions-span"><a href="/journal/deleteServer/{{ row.record.id }}" class="delete-row fa fa-remove"></a></span>
+                    {% endif %}
                 </td>
             </tr>
             {% endblock table.tbody.row %}

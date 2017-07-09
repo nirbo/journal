@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponseRedirect
 from django_tables2 import RequestConfig
 from journal.forms import AddServerForm, EditServerForm
 from journal.models import Server, Location, Owner
@@ -41,10 +41,15 @@ def delete_server_form_view(request, id):
 def edit_server_form_view(request, id):
     server_to_edit = Server.objects.get(id=id)
     edit_server_form = EditServerForm(request.POST or None, instance=server_to_edit)
+    next_page = request.GET.get('next', '')
 
     if request.method == 'POST':
         if edit_server_form.is_valid():
             edit_server_form.save()
+
+            if next_page:
+                return HttpResponseRedirect('/journal/search/{}'.format(next_page))
+
             return redirect('/journal/show_servers/')
     else:
         edit_server_form = EditServerForm(instance=server_to_edit)
@@ -55,32 +60,53 @@ def edit_server_form_view(request, id):
     return render(request, 'journal/edit_server.html', context)
 
 
-def search(request):
+def search(request, pattern):
+    context = ''
+
     if request.method == 'POST':
-        servers = Server.objects.all()
-        owners = Owner.objects.all()
-        locations = Location.objects.all()
-        search_pattern = request.POST.get('search', None)
-        table_data = set()
+        search_pattern = request.POST.get('search', '')
+        table = search_lookup(request, search_pattern, pattern)
 
-        for server in servers.values():
-            server_values = []
-
-            for key, value in server.items():
-                if 'owner' in key:
-                    server_values.append(list(owners.filter(id=value))[-1].owner_name)
-                elif 'location' in key:
-                    server_values.append(list(locations.filter(id=value))[-1].physical_location)
-                else:
-                    server_values.append(value)
-
-            for value in server_values:
-                if search_pattern.lower() in str(value).lower():
-                    table_data.add(server_values[0])
-
-        table = ServerTable(servers.filter(id__in=list(table_data)).order_by('name'))
         RequestConfig(request).configure(table)
         context = {'search_results': table,
                    'search_term': search_pattern}
 
-        return render(request, 'journal/search.html', context)
+    elif request.method == 'GET':
+        search_pattern = request.GET.get('search', '')
+        table = search_lookup(request, search_pattern, pattern)
+
+        RequestConfig(request).configure(table)
+        context = {'search_results': table,
+                   'search_term': search_pattern}
+
+    return render(request, 'journal/search.html', context)
+
+
+def search_lookup(request, search_pattern, pattern):
+    servers = Server.objects.all()
+    owners = Owner.objects.all()
+    locations = Location.objects.all()
+    table_data = set()
+    table = ''
+
+    if pattern:
+        search_pattern = pattern
+
+    for server in servers.values():
+        server_values = []
+
+        for key, value in server.items():
+            if 'owner' in key:
+                server_values.append(list(owners.filter(id=value))[-1].owner_name)
+            elif 'location' in key:
+                server_values.append(list(locations.filter(id=value))[-1].physical_location)
+            else:
+                server_values.append(value)
+
+        for value in server_values:
+            if search_pattern.lower() in str(value).lower():
+                table_data.add(server_values[0])
+
+        table = ServerTable(servers.filter(id__in=list(table_data)).order_by('name'))
+
+    return table

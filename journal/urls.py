@@ -7,7 +7,7 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^add_server/$', views.add_server_form_view, name='add_server_form'),
     url(r'^show_servers/', views.show_servers, name='show_servers'),
-    url(r'^search/$', views.search, name='search'),
+    url(r'^search/(?P<pattern>.*)$', views.search, name='search'),
     url(r'^editServer/(?P<id>\d+)$', views.edit_server_form_view, name='edit_server_form'),
     url(r'^deleteServer/(?P<id>\d+)$', views.delete_server_form_view, name='delete_server_form'),
 ]
