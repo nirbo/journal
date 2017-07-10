@@ -15,6 +15,7 @@ function deleteConfirm(id, name, searchTerm) {
         closeIcon: true,
         closeIconClass: 'fa fa-close',
         escapeKey: 'cancel',
+        backgroundDismiss: true,
         columnClass: 'col-md-6 col-md-offset-3',
         type: 'red',
         typeAnimated: true,
