@@ -1,4 +1,10 @@
+.jumbotron {
+    width: 150%;
+    margin-left: -26%;
+}
+
 body {
     background-color: #3c3c3c;
     font-family: Roboto, sans-serif;
+    padding-top: 5%;
 }

@@ -10,7 +10,7 @@
 
 .table-hover tbody tr:hover td,
 .table-hover tbody tr:hover th {
-    background-color: darksalmon;
+    background-color: #FCD581;
 }
 
 .action-buttons {
@@ -36,7 +36,7 @@ span {
 }
 
 th {
-    background-color: lightskyblue;
+    background-color: #A4C2A5;
     color: #3c3c3c;
 }
 

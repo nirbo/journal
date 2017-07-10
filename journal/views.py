@@ -34,6 +34,10 @@ def show_servers(request):
 
 def delete_server_form_view(request, id):
     Server.objects.get(id=id).delete()
+    next_page = request.GET.get('next', '')
+
+    if next_page:
+        return HttpResponseRedirect('/journal/search/{}'.format(next_page))
 
     return redirect('/journal/show_servers/')
 
