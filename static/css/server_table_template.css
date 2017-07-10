@@ -13,14 +13,18 @@
     background-color: darksalmon;
 }
 
-.edit-row {
-    color: #3c3c3c;
-    margin: 0 5%;
+.action-buttons {
+    margin: 0 auto;
+    text-align: center;
 }
 
-.delete-row {
-    color: red;
-    margin: 0 10%;
+.edit-button {
+    color: #3c3c3c;
+    min-width: 45%;
+}
+
+.delete-button {
+    min-width: 45%;
 }
 
 tbody tr {

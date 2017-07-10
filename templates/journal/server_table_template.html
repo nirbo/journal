@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="{% static 'css/server_table_template.css' %}">
 <link rel="stylesheet" href="{% static 'jquery/jquery-confirm/jquery-confirm.min.css' %}">
 <script src="{% static 'jquery/jquery-confirm/jquery-confirm.min.js' %}"></script>
+<script src="{% static 'js/delete_dialog.js' %}"></script>
 
 {% if table.page %}
     <div class="table-container">
@@ -39,28 +40,19 @@
                 {% endfor %}
                 <td>
                     {% if '/search/' in request.get_full_path %}
-                        <span class="actions-span"><a href="/journal/editServer/{{ row.record.id }}?next={{ search_term }}" class="edit-row fa fa-edit"></a></span>
-                        <span class="actions-span"><a href="/journal/deleteServer/{{ row.record.id }}?next={{ search_term }}" class="delete-row fa fa-remove"></a></span>
+                        <div class="action-buttons">
+                            <a href="/journal/editServer/{{ row.record.id }}?next={{ search_term }}">
+                                <input type="button" class="btn btn-warning edit-button" value="Edit">
+                            </a>
+                            <input type="button" class="btn btn-danger delete-button" value="Delete" onclick="deleteConfirm('{{ row.record.id }}', '{{ row.record.name }}', '{{ search_term }}');">
+                        </div>
                     {% else %}
-                        <span class="actions-span"><a href="/journal/editServer/{{ row.record.id }}" class="edit-row fa fa-edit"></a></span>
-{#                        <span class="actions-span"><a href="/journal/deleteServer/{{ row.record.id }}" class="delete-row fa fa-remove"></a></span>#}
-                        <span class="actions-span"><a onclick="deleteConfirm()" class="delete-row fa fa-remove"></a></span>
-
-                        <script type="text/javascript">
-                            function deleteConfirm() {
-                                $.confirm({
-                                    theme: 'material',
-                                    title: 'Delete Server: {{ row.record.name }}',
-                                    content: 'Are you sure you wish to delete?',
-                                    buttons: {
-                                       confirm: function () {
-                                           window.location.href = '/journal/deleteServer/{{ row.record.id }}'
-                                       },
-                                        cancel: function () {}
-                                    }
-                                });
-                            }
-                        </script>
+                        <div class="action-buttons">
+                            <a href="/journal/editServer/{{ row.record.id }}">
+                                <input type="button" class="btn btn-warning edit-button" value="Edit">
+                            </a>
+                            <input type="button" class="btn btn-danger delete-button" value="Delete" onclick="deleteConfirm('{{ row.record.id }}', '{{ row.record.name }}', null);">
+                        </div>
                     {% endif %}
                 </td>
             </tr>
