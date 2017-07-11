@@ -13,7 +13,7 @@
     background-color: #FCD581;
 }
 
-.action-buttons {
+.table-action-buttons {
     margin: 0 auto;
     text-align: center;
 }
@@ -38,6 +38,7 @@ span {
 th {
     background-color: #A4C2A5;
     color: #3c3c3c;
+    text-align: center;
 }
 
 a,a:hover,a:link,a:visited,a:active {

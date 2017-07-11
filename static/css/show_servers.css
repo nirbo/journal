@@ -2,8 +2,13 @@ h1 {
     font-weight: bold;
 }
 
+.add-server {
+    float: right;
+    margin: 0 auto 0.5%;
+    width: 9%;
+}
+
 .separator {
     background-color: #8c8c8c;
     height: 1px;
-    margin-bottom: 4%;
 }

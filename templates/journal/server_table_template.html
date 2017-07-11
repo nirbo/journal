@@ -5,8 +5,8 @@
 
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/server_table_template.css' %}">
-<link rel="stylesheet" href="{% static 'jquery/jquery-confirm/jquery-confirm.min.css' %}">
-<script src="{% static 'jquery/jquery-confirm/jquery-confirm.min.js' %}"></script>
+<link rel="stylesheet" href="{% static 'libs/jquery-confirm/jquery-confirm.min.css' %}">
+<script src="{% static 'libs/jquery-confirm/jquery-confirm.min.js' %}"></script>
 <script src="{% static 'js/delete_dialog.js' %}"></script>
 
 {% if table.page %}
@@ -40,14 +40,14 @@
                 {% endfor %}
                 <td>
                     {% if '/search/' in request.get_full_path %}
-                        <div class="action-buttons">
+                        <div class="table-action-buttons">
                             <a href="/journal/editServer/{{ row.record.id }}?next={{ search_term }}">
                                 <input type="button" class="btn btn-warning edit-button" value="Edit">
                             </a>
                             <input type="button" class="btn btn-danger delete-button" value="Delete" onclick="deleteConfirm('{{ row.record.id }}', '{{ row.record.name }}', '{{ search_term }}');">
                         </div>
                     {% else %}
-                        <div class="action-buttons">
+                        <div class="table-action-buttons">
                             <a href="/journal/editServer/{{ row.record.id }}">
                                 <input type="button" class="btn btn-warning edit-button" value="Edit">
                             </a>
