@@ -44,14 +44,14 @@
                             <a href="/journal/editServer/{{ row.record.id }}?next={{ search_term }}">
                                 <input type="button" class="btn btn-warning edit-button" value="Edit">
                             </a>
-                            <input type="button" class="btn btn-danger delete-button" value="Delete" onclick="deleteConfirm('{{ row.record.id }}', '{{ row.record.name }}', '{{ search_term }}');">
+                            <input type="button" class="btn btn-danger delete-button" value="Delete" onclick="deleteServerConfirm('{{ row.record.id }}', '{{ row.record.name }}', '{{ search_term }}');">
                         </div>
                     {% else %}
                         <div class="table-action-buttons">
                             <a href="/journal/editServer/{{ row.record.id }}">
                                 <input type="button" class="btn btn-warning edit-button" value="Edit">
                             </a>
-                            <input type="button" class="btn btn-danger delete-button" value="Delete" onclick="deleteConfirm('{{ row.record.id }}', '{{ row.record.name }}', null);">
+                            <input type="button" class="btn btn-danger delete-button" value="Delete" onclick="deleteServerConfirm('{{ row.record.id }}', '{{ row.record.name }}', null);">
                         </div>
                     {% endif %}
                 </td>

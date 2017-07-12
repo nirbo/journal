@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect
 from django_tables2 import RequestConfig
-from journal.forms import AddServerForm, EditServerForm
+from journal.forms import AddServerForm, EditOwnerForm, AddOwnerForm, AddLocationForm
 from journal.models import Server, Location, Owner
-from journal.tables import ServerTable
+from journal.tables import ServerTable, OwnerTable, LocationTable
 
 
 def index(request):
@@ -44,7 +44,7 @@ def delete_server_form_view(request, id):
 
 def edit_server_form_view(request, id):
     server_to_edit = Server.objects.get(id=id)
-    edit_server_form = EditServerForm(request.POST or None, instance=server_to_edit)
+    edit_server_form = EditOwnerForm(request.POST or None, instance=server_to_edit)
     next_page = request.GET.get('next', '')
 
     if request.method == 'POST':
@@ -56,7 +56,7 @@ def edit_server_form_view(request, id):
 
             return redirect('/journal/show_servers/')
     else:
-        edit_server_form = EditServerForm(instance=server_to_edit)
+        edit_server_form = EditOwnerForm(instance=server_to_edit)
 
     context = {'edit_server_form': edit_server_form,
                'id': id}
@@ -114,3 +114,60 @@ def search_lookup(request, search_pattern, pattern):
         table = ServerTable(servers.filter(id__in=list(table_data)).order_by('name'))
 
     return table
+
+
+def manage_owners(request):
+    table = OwnerTable(Owner.objects.order_by('owner_name'))
+    RequestConfig(request).configure(table)
+    context = {'owners_table': table}
+
+    return render(request, 'journal/manage_owners.html', context)
+
+
+def delete_owner(request, id):
+    if is_safe_to_delete_owner(id):
+        Owner.objects.get(id=id).delete()
+
+    return redirect('/journal/manageOwners/')
+
+
+def is_safe_to_delete_owner(id):
+    owner_servers = Server.objects.filter(owner__in=id).count()
+
+    if owner_servers == 0:
+        return True
+
+    return False
+
+
+def add_owner(request):
+    if request.method == 'POST':
+        add_owner_form = AddOwnerForm(request.POST)
+
+        if add_owner_form.is_valid():
+            add_owner_form.save(commit=True)
+            return redirect('/journal/manageOwners/')
+    else:
+        add_owner_form = AddOwnerForm()
+
+    context = {'add_owner_form': add_owner_form}
+
+    return render(request, 'journal/add_owner.html', context)
+
+
+def edit_owner(request, id):
+    owner_to_edit = Owner.objects.get(id=id)
+    edit_owner_form = EditOwnerForm(request.POST or None, instance=owner_to_edit)
+
+    if request.method == 'POST':
+        if edit_owner_form.is_valid():
+            edit_owner_form.save()
+
+            return redirect('/journal/manageOwners/')
+    else:
+        edit_owner_form = EditOwnerForm(instance=owner_to_edit)
+
+    context = {'edit_owner_form': edit_owner_form,
+               'id': id}
+
+    return render(request, 'journal/edit_owner.html', context)

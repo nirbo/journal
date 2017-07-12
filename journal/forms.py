@@ -127,7 +127,7 @@ class EditServerForm(forms.ModelForm):
         return form_field_ip
 
     def clean(self):
-        super(EditServerForm, self).clean()
+        super(EditOwnerForm, self).clean()
         clean_data = self.cleaned_data
         has_changed = self.has_changed()
         instance = self.instance
@@ -165,3 +165,27 @@ class EditServerForm(forms.ModelForm):
         new_name = self.cleaned_data['name']
 
         return Server.objects.exclude(name__in=(old_name, new_name)).values()
+
+
+class AddOwnerForm(forms.ModelForm):
+    class Meta:
+        model = Owner
+        fields = '__all__'
+
+
+class EditOwnerForm(forms.ModelForm):
+    class Meta:
+        model = Owner
+        fields = '__all__'
+
+
+class AddLocationForm(forms.ModelForm):
+    class Meta:
+        model = Location
+        fields = '__all__'
+
+
+class EditLocationForm(forms.ModelForm):
+    class Meta:
+        model = Location
+        fields = '__all__'
