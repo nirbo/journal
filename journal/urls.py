@@ -14,4 +14,8 @@ urlpatterns = [
     url(r'^deleteOwner/(?P<id>\d+)$', views.delete_owner, name='delete_owner'),
     url(r'^addOwner/$', views.add_owner, name='add_owner'),
     url(r'^editOwner/(?P<id>\d+)$', views.edit_owner, name='edit_owner'),
+    url(r'^manageLocations/$', views.manage_locations, name='manage_locations'),
+    url(r'^addLocation/$', views.add_location, name='add_location'),
+    url(r'^deleteLocation/(?P<id>\d+)$', views.delete_location, name='delete_location'),
+    url(r'^editLocation/(?P<id>\d+)$', views.edit_location, name='edit_location'),
 ]

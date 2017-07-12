@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect
 from django_tables2 import RequestConfig
-from journal.forms import AddServerForm, EditOwnerForm, AddOwnerForm, AddLocationForm
+from journal.forms import AddServerForm, EditOwnerForm, AddOwnerForm, AddLocationForm, EditLocationForm
 from journal.models import Server, Location, Owner
 from journal.tables import ServerTable, OwnerTable, LocationTable
 
@@ -171,3 +171,60 @@ def edit_owner(request, id):
                'id': id}
 
     return render(request, 'journal/edit_owner.html', context)
+
+
+def manage_locations(request):
+    table = LocationTable(Location.objects.order_by('physical_location'))
+    RequestConfig(request).configure(table)
+    context = {'locations_table': table}
+
+    return render(request, 'journal/manage_locations.html', context)
+
+
+def add_location(request):
+    if request.method == 'POST':
+        add_location_form = AddLocationForm(request.POST)
+
+        if add_location_form.is_valid():
+            add_location_form.save(commit=True)
+            return redirect('/journal/manageLocations/')
+    else:
+        add_location_form = AddLocationForm()
+
+    context = {'add_location_form': add_location_form}
+
+    return render(request, 'journal/add_location.html', context)
+
+
+def delete_location(request, id):
+    if is_safe_to_delete_location(id):
+        Location.objects.get(id=id).delete()
+
+    return redirect('/journal/manageLocations/')
+
+
+def is_safe_to_delete_location(id):
+    owner_servers = Server.objects.filter(location__in=id).count()
+
+    if owner_servers == 0:
+        return True
+
+    return False
+
+
+def edit_location(request, id):
+    location_to_edit = Location.objects.get(id=id)
+    edit_location_form = EditLocationForm(request.POST or None, instance=location_to_edit)
+
+    if request.method == 'POST':
+        if edit_location_form.is_valid():
+            edit_location_form.save()
+
+            return redirect('/journal/manageLocations/')
+    else:
+        edit_location_form = EditLocationForm(instance=location_to_edit)
+
+    context = {'edit_location_form': edit_location_form,
+               'id': id}
+
+    return render(request, 'journal/edit_location.html', context)

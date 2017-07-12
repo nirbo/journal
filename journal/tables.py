@@ -29,6 +29,7 @@ class LocationTable(tables.Table):
     class Meta:
         model = Location
         attrs = {'class': 'table table-striped table-bordered table-hover'}
+        template = 'journal/location_table_template.html'
         per_page = 10
         empty_text = 'No locations found.'
         prefix = 'location'

@@ -5,3 +5,7 @@ function goToAddServer(url) {
 function goToManageOwners(url) {
     window.location.href = url
 }
+
+function goToManageLocations(url) {
+    window.location.href = url
+}
