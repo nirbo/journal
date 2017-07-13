@@ -1,5 +1,5 @@
 from django import forms
-from journal.models import Server, Location, Owner
+from journal.models import Server, Location, Owner, VirtualIP
 
 
 class AddServerForm(forms.ModelForm):
@@ -188,4 +188,16 @@ class AddLocationForm(forms.ModelForm):
 class EditLocationForm(forms.ModelForm):
     class Meta:
         model = Location
+        fields = '__all__'
+
+
+class AddVirtualIpForm(forms.ModelForm):
+    class Meta:
+        model = VirtualIP
+        fields = '__all__'
+
+
+class EditVirtualIpForm(forms.ModelForm):
+    class Meta:
+        model = VirtualIP
         fields = '__all__'

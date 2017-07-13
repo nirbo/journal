@@ -1,0 +1,48 @@
+#virtual-ip-table > thead > tr:first-child > th:first-child,
+#virtual-ip-table > tbody > tr > td:first-child {
+    display: none;
+}
+
+.table-striped > tbody > tr:nth-child(even) > td,
+.table-striped > tbody > tr:nth-child(odd) > th {
+    background-color: lavender;
+}
+
+.table-hover tbody tr:hover td,
+.table-hover tbody tr:hover th {
+    background-color: #FCD581;
+}
+
+.table-action-buttons {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.edit-button {
+    color: #3c3c3c;
+    min-width: 45%;
+}
+
+.delete-button {
+    min-width: 45%;
+}
+
+tbody tr {
+    font-size: 14px;
+}
+
+span {
+    text-align: center;
+}
+
+th {
+    background-color: #A4C2A5;
+    color: #3c3c3c;
+    text-align: center;
+}
+
+a,a:hover,a:link,a:visited,a:active {
+    text-decoration: none;
+    outline: none;
+    border: none;
+}

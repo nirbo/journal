@@ -18,4 +18,8 @@ urlpatterns = [
     url(r'^addLocation/$', views.add_location, name='add_location'),
     url(r'^deleteLocation/(?P<id>\d+)$', views.delete_location, name='delete_location'),
     url(r'^editLocation/(?P<id>\d+)$', views.edit_location, name='edit_location'),
+    url(r'^manageVirtualIP/', views.manage_virtual_ip, name='manage_virtual_ips'),
+    url(r'^add_virtual_ip/$', views.add_virtual_ip, name='add_virtual_ip'),
+    url(r'^editVirtualIP/(?P<id>\d+)$', views.edit_virtual_ip, name='edit_virtual_ip'),
+    url(r'^deleteVirtualIP/(?P<id>\d+)$', views.delete_virtual_ip, name='delete_virtual_ip'),
 ]

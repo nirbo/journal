@@ -10,6 +10,10 @@ function goToAddLocations(url) {
     window.location.href = url
 }
 
+function goToAddVirtualIP(url) {
+    window.location.href = url
+}
+
 function deleteOwnerFailed() {
     $.alert({
         theme: 'material',

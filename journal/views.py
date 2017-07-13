@@ -1,9 +1,9 @@
-from django.shortcuts import render, redirect, HttpResponseRedirect, HttpResponse
+from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.contrib import messages
 from django_tables2 import RequestConfig
-from journal.forms import AddServerForm, EditOwnerForm, AddOwnerForm, AddLocationForm, EditLocationForm
-from journal.models import Server, Location, Owner
-from journal.tables import ServerTable, OwnerTable, LocationTable
+from journal.forms import AddServerForm, EditOwnerForm, AddOwnerForm, AddLocationForm, EditLocationForm, AddVirtualIpForm, EditVirtualIpForm
+from journal.models import Server, Location, Owner, VirtualIP
+from journal.tables import ServerTable, OwnerTable, LocationTable, VirtualIpTable
 
 
 def index(request):
@@ -233,3 +233,58 @@ def edit_location(request, id):
                'id': id}
 
     return render(request, 'journal/edit_location.html', context)
+
+
+def manage_virtual_ip(request):
+    table = VirtualIpTable(VirtualIP.objects.order_by('ip_address'))
+    RequestConfig(request).configure(table)
+    context = {'virtual_ip_table': table}
+
+    return render(request, 'journal/manage_virtual_ip.html', context)
+
+
+def add_virtual_ip(request):
+    if request.method == 'POST':
+        add_virtual_ip_form = AddVirtualIpForm(request.POST)
+
+        if add_virtual_ip_form.is_valid():
+            add_virtual_ip_form.save(commit=True)
+            return redirect('/journal/manageVirtualIP/')
+    else:
+        add_virtual_ip_form = AddVirtualIpForm()
+
+    context = {'add_virtual_ip_form': add_virtual_ip_form}
+
+    return render(request, 'journal/add_virtual_ip.html', context)
+
+
+def edit_virtual_ip(request, id):
+    virtual_ip_to_edit = VirtualIP.objects.get(id=id)
+    edit_virtual_ip_form = EditVirtualIpForm(request.POST or None, instance=virtual_ip_to_edit)
+    next_page = request.GET.get('next', '')
+
+    if request.method == 'POST':
+        if edit_virtual_ip_form.is_valid():
+            edit_virtual_ip_form.save()
+
+            if next_page:
+                return HttpResponseRedirect('/journal/search/{}'.format(next_page))
+
+            return redirect('/journal/manageVirtualIP/')
+    else:
+        edit_virtual_ip_form = EditVirtualIpForm(instance=virtual_ip_to_edit)
+
+    context = {'edit_virtual_ip_form': edit_virtual_ip_form,
+               'id': id}
+
+    return render(request, 'journal/edit_virtual_ip.html', context)
+
+
+def delete_virtual_ip(request, id):
+    VirtualIP.objects.get(id=id).delete()
+    next_page = request.GET.get('next', '')
+
+    if next_page:
+        return HttpResponseRedirect('/journal/search/{}'.format(next_page))
+
+    return redirect('/journal/manageVirtualIP/')
