@@ -1,0 +1,10 @@
+[
+  {
+    "model": "journal.owner",
+    "pk": 7,
+    "fields":
+      {
+        "owner_name": "Unassigned"
+      }
+  }
+]

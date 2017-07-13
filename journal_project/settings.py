@@ -15,10 +15,11 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STATIC_DIR = os.path.join(BASE_DIR, "static")
+APP_DIR = os.path.join(BASE_DIR, 'journal')
 STATIC_CSS = os.path.join(STATIC_DIR, "css")
 TEMPLATE_DIR = os.path.join(BASE_DIR, "templates")
 JOURNAL_TEMPLATES_DIR = os.path.join(TEMPLATE_DIR, 'journal')
-
+FIXTURE_DIRS = os.path.join(APP_DIR, 'fixtures',)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
@@ -132,4 +133,3 @@ STATICFILES_DIRS = [
 ]
 
 DJANGO_TABLES2_TEMPLATE = os.path.join(JOURNAL_TEMPLATES_DIR, 'server_table_template.html')
-
