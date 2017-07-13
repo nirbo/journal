@@ -74,3 +74,9 @@
 {% if table.page %}
     </div>
 {% endif %}
+
+{% if messages %}
+        {% for message in messages %}
+            <script>deleteLocationFailed()</script>
+        {% endfor %}
+{% endif %}

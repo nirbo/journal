@@ -39,12 +39,14 @@
                     <td {{ column.attrs.td.as_html }}>{{ cell }}</td>
                 {% endfor %}
                 <td>
+                    {% if 'Unassigned' != row.record.owner_name %}
                     <div class="table-action-buttons">
                         <a href="/journal/editOwner/{{ row.record.id }}">
                             <input type="button" class="btn btn-warning edit-button" value="Edit">
                         </a>
                         <input type="button" class="btn btn-danger delete-button" value="Delete" onclick="deleteOwnerConfirm('{{ row.record.id }}', '{{ row.record.owner_name }}');">
                     </div>
+                    {% endif %}
                 </td>
             </tr>
             {% endblock table.tbody.row %}
@@ -73,4 +75,10 @@
 
 {% if table.page %}
     </div>
+{% endif %}
+
+{% if messages %}
+        {% for message in messages %}
+            <script>deleteOwnerFailed()</script>
+        {% endfor %}
 {% endif %}

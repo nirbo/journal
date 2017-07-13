@@ -1,4 +1,5 @@
-from django.shortcuts import render, redirect, HttpResponseRedirect
+from django.shortcuts import render, redirect, HttpResponseRedirect, HttpResponse
+from django.contrib import messages
 from django_tables2 import RequestConfig
 from journal.forms import AddServerForm, EditOwnerForm, AddOwnerForm, AddLocationForm, EditLocationForm
 from journal.models import Server, Location, Owner
@@ -127,6 +128,8 @@ def manage_owners(request):
 def delete_owner(request, id):
     if is_safe_to_delete_owner(id):
         Owner.objects.get(id=id).delete()
+    else:
+        messages.error(request, 'Failed to Delete Owner')
 
     return redirect('/journal/manageOwners/')
 
@@ -199,6 +202,8 @@ def add_location(request):
 def delete_location(request, id):
     if is_safe_to_delete_location(id):
         Location.objects.get(id=id).delete()
+    else:
+        messages.error(request, 'Failed to Delete Location')
 
     return redirect('/journal/manageLocations/')
 

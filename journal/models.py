@@ -26,3 +26,11 @@ class Owner(models.Model):
 
     def __str__(self):
         return self.owner_name
+
+
+# class VirtualIP(models.Model):
+#     ip_address = models.GenericIPAddressField(blank=False, unique=True, null=False, protocol='both', default='')
+#     netmask = models.GenericIPAddressField(blank=False, unique=False, null=False, protocol='both', default='')
+#     data_IP_1 = models.GenericIPAddressField(blank=False, unique=True, null=False, protocol='both', default='')
+#     data_IP_2 = models.GenericIPAddressField(blank=True, unique=True, null=True, protocol='both')
+#     owner = models.ForeignKey('Owner')
