@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.contrib import messages
 from django_tables2 import RequestConfig
-from journal.forms import AddServerForm, EditOwnerForm, AddOwnerForm, AddLocationForm, EditLocationForm, AddVirtualIpForm, EditVirtualIpForm
+from journal.forms import AddServerForm, EditServerForm, EditOwnerForm, AddOwnerForm, AddLocationForm, EditLocationForm, AddVirtualIpForm, EditVirtualIpForm
 from journal.models import Server, Location, Owner, VirtualIP
 from journal.tables import ServerTable, OwnerTable, LocationTable, VirtualIpTable
 
@@ -45,7 +45,7 @@ def delete_server_form_view(request, id):
 
 def edit_server_form_view(request, id):
     server_to_edit = Server.objects.get(id=id)
-    edit_server_form = EditOwnerForm(request.POST or None, instance=server_to_edit)
+    edit_server_form = EditServerForm(request.POST or None, instance=server_to_edit)
     next_page = request.GET.get('next', '')
 
     if request.method == 'POST':
@@ -57,7 +57,7 @@ def edit_server_form_view(request, id):
 
             return redirect('/journal/show_servers/')
     else:
-        edit_server_form = EditOwnerForm(instance=server_to_edit)
+        edit_server_form = EditServerForm(instance=server_to_edit)
 
     context = {'edit_server_form': edit_server_form,
                'id': id}
