@@ -1,3 +1,9 @@
+#virtual-ip-table {
+    -webkit-box-shadow: 0 0 15px darkslategray;
+    -moz-box-shadow: 0 0 15px darkslategray;
+    box-shadow: 0 0 15px darkslategray;
+}
+
 #virtual-ip-table > thead > tr:first-child > th:first-child,
 #virtual-ip-table > tbody > tr > td:first-child {
     display: none;

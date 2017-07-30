@@ -3,7 +3,6 @@ from django.shortcuts import render, redirect, HttpResponseRedirect, HttpRespons
 from django.utils.encoding import smart_str
 from django_tables2 import RequestConfig
 from import_export import resources
-
 from journal.admin import ServerResource, VirtualIPResource
 from journal.forms import AddServerForm, EditServerForm, EditOwnerForm, AddOwnerForm, AddLocationForm, \
     EditLocationForm, AddVirtualIpForm, EditVirtualIpForm, CSVFileForm

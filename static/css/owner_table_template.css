@@ -1,3 +1,9 @@
+#owner-table {
+    -webkit-box-shadow: 0 0 15px darkslategray;
+    -moz-box-shadow: 0 0 15px darkslategray;
+    box-shadow: 0 0 15px darkslategray;
+}
+
 #owner-table > thead > tr:first-child > th:first-child,
 #owner-table > tbody > tr > td:first-child {
     max-width: 10%;
