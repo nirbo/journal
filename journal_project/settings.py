@@ -20,6 +20,8 @@ STATIC_CSS = os.path.join(STATIC_DIR, "css")
 TEMPLATE_DIR = os.path.join(BASE_DIR, "templates")
 JOURNAL_TEMPLATES_DIR = os.path.join(TEMPLATE_DIR, 'journal')
 FIXTURE_DIRS = os.path.join(APP_DIR, 'fixtures',)
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
@@ -126,6 +128,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'static-files')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     STATIC_DIR,

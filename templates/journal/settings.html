@@ -1,0 +1,54 @@
+{% extends "journal/base.html" %}
+{% load bootstrap3 %}
+
+<!DOCTYPE html>
+    {% block body_block %}
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'css/settings.css' %}">
+
+        <div class="container">
+            <div class="jumbotron">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h1>Settings</h1>
+                    </div>
+                    <div class="panel-body">
+                        <div class="settings-table-wrapper">
+                            <table id="settings-table">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="button-wrapper">
+                                                {% load static %}
+                                                <form action="{% url 'journal:manage_owners' %}" method="GET">
+                                                    <button class="btn btn-primary manage_owners_button" type="submit">Manage Owners</button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="button-wrapper">
+                                                {% load static %}
+                                                <form action="{% url 'journal:upload_csv_file' %}" method="GET">
+                                                    <button class="btn btn-danger import_export_csv_button" type="submit">Import/Export CSV</button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="button-wrapper">
+                                                {% load static %}
+                                                <form action="{% url 'journal:manage_locations' %}" method="GET">
+                                                    <button class="btn btn-primary manage_locations_button" type="submit">Manage Locations</button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}

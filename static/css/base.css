@@ -2,6 +2,10 @@
     width: 100%;
 }
 
+.glyphicon-cog {
+    font-size: 20px;
+}
+
 body {
     background-color: #3c3c3c;
     font-family: Roboto, sans-serif;

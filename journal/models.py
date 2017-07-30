@@ -1,4 +1,5 @@
 from django.db import models
+import os.path
 
 
 class Server(models.Model):
@@ -36,3 +37,17 @@ class VirtualIP(models.Model):
     data_IP_2 = models.GenericIPAddressField(blank=True, unique=True, null=True, protocol='both')
     owner = models.ForeignKey('Owner')
     location = models.ForeignKey('Location')
+
+    def __str__(self):
+        return self.ip_address
+
+
+class CSVUpload(models.Model):
+    file = models.FileField(max_length=255, upload_to='csv/import/')
+
+    def __unicode__(self):
+        return self.file
+
+    def filename(self):
+        return os.path.basename(self.file.name)
+

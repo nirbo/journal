@@ -1,0 +1,32 @@
+#settings-table {
+    margin: 0 auto;
+    width: 75%;
+}
+
+.settings-table-wrapper {
+    text-align: center;
+}
+
+.manage_owners_button {
+    margin: 1%;
+    width: 40%;
+}
+
+.manage_locations_button {
+    margin: 1%;
+    width: 40%;
+}
+
+.import_export_csv_button {
+    margin: 1%;
+    width: 40%;
+}
+
+.button-wrapper {
+    margin: 0.5%;
+    text-align: center;
+}
+
+h1 {
+    font-weight: bold;
+}

@@ -1,13 +1,194 @@
-from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.contrib import messages
+from django.shortcuts import render, redirect, HttpResponseRedirect, HttpResponse
+from django.utils.encoding import smart_str
 from django_tables2 import RequestConfig
-from journal.forms import AddServerForm, EditServerForm, EditOwnerForm, AddOwnerForm, AddLocationForm, EditLocationForm, AddVirtualIpForm, EditVirtualIpForm
-from journal.models import Server, Location, Owner, VirtualIP
+from import_export import resources
+
+from journal.admin import ServerResource, VirtualIPResource
+from journal.forms import AddServerForm, EditServerForm, EditOwnerForm, AddOwnerForm, AddLocationForm, \
+    EditLocationForm, AddVirtualIpForm, EditVirtualIpForm, CSVFileForm
+from journal.models import Server, Location, Owner, VirtualIP, CSVUpload
 from journal.tables import ServerTable, OwnerTable, LocationTable, VirtualIpTable
+import os.path
+import shutil
+import tablib
 
 
 def index(request):
     return render(request, 'journal/index.html')
+
+
+def settings(request):
+    return render(request, 'journal/settings.html')
+
+
+def upload_csv_file(request):
+    if request.method == 'POST':
+        files_db = CSVUpload.objects.all()
+        form = CSVFileForm(request.POST, request.FILES)
+        import_path = 'media/csv/import/'
+        import_file = ''
+
+        if form.is_valid():
+            if request.POST.get('physical-servers-submit'):
+                import_file = 'physical_servers_import.csv'
+            elif request.POST.get('virtual-ips-submit'):
+                import_file = 'virtual_ips_import.csv'
+
+            full_path_import_file = os.path.join(import_path, import_file)
+            new_file = CSVUpload(file=request.FILES['file'])
+
+            if new_file.filename().lower().endswith('.csv'):
+                new_file.save()
+            else:
+                messages.error(request, 'Wrong file type uploaded; please try again with a CSV file')
+                return HttpResponseRedirect('/journal/importExportCsv/')
+
+            if len(os.listdir(import_path)) == 1:
+                for file in os.listdir(import_path):
+                    file_location = os.path.join(import_path + file)
+                    os.rename(file_location, full_path_import_file)
+            else:
+                shutil.rmtree(import_path)
+                os.makedirs(import_path)
+                files_db.delete()
+
+            return HttpResponseRedirect('/journal/importExportCsv/')
+    else:
+        form = CSVFileForm()
+
+    files_db = CSVUpload.objects.all()
+    context = {'files': files_db,
+               'form': form}
+
+    return render(request, 'journal/import_export_csv.html', context)
+
+
+def import_physical_servers(request):
+    import_path = 'media/csv/import/'
+    import_file = 'physical_servers_import.csv'
+    full_path_import_file = os.path.join(import_path, import_file)
+    files_db = CSVUpload.objects.all()
+    server_resource = resources.modelresource_factory(model=Server)()
+
+    try:
+        dataset = tablib.Dataset().load(open(full_path_import_file).read())
+        test = server_resource.import_data(dataset, dry_run=True)
+
+        if not test.has_errors():
+            result = server_resource.import_data(dataset, dry_run=False)
+            if result:
+                files_db.delete()
+                os.unlink(full_path_import_file)
+                messages.success(request, "Data imported successfully")
+        else:
+            files_db.delete()
+            os.unlink(full_path_import_file)
+            messages.error(request, "Failed to import data, possible duplicate entry or incorrect CSV content syntax")
+
+    except FileNotFoundError:
+        messages.error(request, "No CSV file found; Please upload one and try again")
+
+    return HttpResponseRedirect('/journal/importExportCsv/')
+
+
+def import_virtual_ips(request):
+    import_path = 'media/csv/import/'
+    import_file = 'virtual_ips_import.csv'
+    full_path_import_file = os.path.join(import_path, import_file)
+    files_db = CSVUpload.objects.all()
+    virtual_ip_resource = resources.modelresource_factory(model=VirtualIP)()
+
+    try:
+        dataset = tablib.Dataset().load(open(full_path_import_file).read())
+        test = virtual_ip_resource.import_data(dataset, dry_run=True)
+
+        if not test.has_errors():
+            result = virtual_ip_resource.import_data(dataset, dry_run=False)
+            if result:
+                files_db.delete()
+                os.unlink(full_path_import_file)
+                messages.success(request, "Data imported successfully")
+        else:
+            files_db.delete()
+            os.unlink(full_path_import_file)
+            messages.error(request, "Failed to import data, possible duplicate entry or incorrect CSV content syntax")
+
+    except FileNotFoundError:
+        messages.error(request, "No CSV file found; Please upload one and try again")
+
+    return HttpResponseRedirect('/journal/importExportCsv/')
+
+
+def export_physical_servers(request):
+    export_file = 'media/csv/export/physical_servers_export.csv'
+
+    if os.path.isfile(export_file):
+        os.remove(export_file)
+
+    try:
+        with open(export_file, 'w') as exported_csv:
+            exported_csv.write("id,name,mgmt_IP,data_IP_1,data_IP_2,bmc_IP,owner,location\n")
+            for row in ServerResource().export():
+                for column in row:
+                    exported_csv.write("{},".format(column))
+                exported_csv.write('\n')
+            exported_csv.close()
+
+        response = HttpResponse(open(export_file, 'rb'), content_type='application/force-download')
+        response['Content-Disposition'] = 'attachment; filename={}'.format(smart_str(os.path.basename(export_file)))
+        response['X-Sendfile'] = smart_str(export_file)
+
+        return response
+
+    except Exception:
+        messages.error(request, 'Failed to export physical servers CSV file')
+
+    return HttpResponseRedirect('/journal/importExportCsv/')
+
+
+def export_virtual_ips(request):
+    export_file = 'media/csv/export/virtual_ips_export.csv'
+
+    if os.path.isfile(export_file):
+        os.remove(export_file)
+
+    try:
+        with open(export_file, 'w') as exported_csv:
+            exported_csv.write("id,ip_address,netmask,vlan,data_IP_1,data_IP_2,owner,location\n")
+            for row in VirtualIPResource().export():
+                for column in row:
+                    exported_csv.write("{},".format(column))
+                exported_csv.write('\n')
+            exported_csv.close()
+
+        response = HttpResponse(open(export_file, 'rb'), content_type='application/force-download')
+        response['Content-Disposition'] = 'attachment; filename={}'.format(smart_str(os.path.basename(export_file)))
+        response['X-Sendfile'] = smart_str(export_file)
+
+        return response
+
+    except Exception:
+        messages.error(request, 'Failed to export virtual IPs CSV file')
+
+    return HttpResponseRedirect('/journal/importExportCsv/')
+
+
+def delete_all_csvs(request):
+    import_path = 'media/csv/import/'
+
+    try:
+        shutil.rmtree(import_path)
+        os.makedirs(import_path)
+        CSVUpload.objects.all().delete()
+        messages.success(request, 'All CSVs deleted successfully')
+    except Exception:
+        messages.error(request, 'Failed to delete all CSVs')
+
+    return HttpResponseRedirect('/journal/importExportCsv/')
+
+def import_export_csv(request):
+    return render(request, 'journal/import_export_csv.html')
 
 
 def add_server_form_view(request):

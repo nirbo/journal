@@ -5,6 +5,13 @@ app_name = 'journal'
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
+    url(r'^settings/$', views.settings, name='settings'),
+    url(r'^importExportCsv/$', views.upload_csv_file, name='upload_csv_file'),
+    url(r'^importPhysicalServers/$', views.import_physical_servers, name='import_physical_servers'),
+    url(r'^importVirtualIPs/$', views.import_virtual_ips, name='import_virtual_ips'),
+    url(r'^exportPhysicalServers/$', views.export_physical_servers, name='export_physical_servers'),
+    url(r'^exportVirtualIPs/$', views.export_virtual_ips, name='export_virtual_ips'),
+    url(r'^deleteAllCSVs/$', views.delete_all_csvs, name='delete_all_csvs'),
     url(r'^add_server/$', views.add_server_form_view, name='add_server_form'),
     url(r'^show_servers/', views.show_servers, name='show_servers'),
     url(r'^search/(?P<pattern>.*)$', views.search, name='search'),

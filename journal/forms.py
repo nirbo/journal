@@ -2,6 +2,10 @@ from django import forms
 from journal.models import Server, Location, Owner, VirtualIP
 
 
+class CSVFileForm(forms.Form):
+    file = forms.FileField(label='Select a CSV file')
+
+
 class AddServerForm(forms.ModelForm):
     class Meta:
         model = Server
