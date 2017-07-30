@@ -10,17 +10,22 @@
 
         <div class="container">
             <div class="jumbotron">
-                <h1>Server Management</h1>
-                <hr class="separator">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h1>Server Management</h1>
+                    </div>
+                </div>
 
-                <p>
-                    <button class="btn btn-primary add-server" type="button" onclick="goToAddServer('{% url 'journal:add_server_form' %}')">
-                        {% bootstrap_icon "plus" %}
-                         Add Server
-                    </button>
-                </p>
+                <div class="panel-body">
+                    <p>
+                        <button class="btn btn-primary add-server" type="button" onclick="goToAddServer('{% url 'journal:add_server_form' %}')">
+                            {% bootstrap_icon "plus" %}
+                             Add Server
+                        </button>
+                    </p>
 
-                {% render_table servers_table %}
+                    {% render_table servers_table %}
+                </div>
             </div>
         </div>
     {% endblock %}

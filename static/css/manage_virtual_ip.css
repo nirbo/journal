@@ -1,14 +1,9 @@
-h1 {
-    font-weight: bold;
-}
-
 .add-virtual-ip {
     float: right;
     margin: 0 auto 0.5%;
     width: 9%;
 }
 
-.separator {
-    background-color: #8c8c8c;
-    height: 1px;
+h1 {
+    font-weight: bold;
 }

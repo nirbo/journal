@@ -10,16 +10,21 @@
 
         <div class="container">
             <div class="jumbotron">
-                <h1>Owner Management</h1>
-                <hr class="separator">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h1>Owner Management</h1>
+                    </div>
+                </div>
 
-                <p>
-                    <button class="btn btn-primary add-owner" type="button" onclick="goToAddOwners('{% url 'journal:add_owner' %}')">
-                        {% bootstrap_icon "plus" %}
-                         Add Owner
-                    </button>
-                </p>
-                {% render_table owners_table %}
+                <div class="panel-body">
+                    <p>
+                        <button class="btn btn-primary add-owner" type="button" onclick="goToAddOwners('{% url 'journal:add_owner' %}')">
+                            {% bootstrap_icon "plus" %}
+                             Add Owner
+                        </button>
+                    </p>
+                    {% render_table owners_table %}
+                </div>
             </div>
         </div>
     {% endblock %}

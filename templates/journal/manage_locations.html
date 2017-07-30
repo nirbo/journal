@@ -10,16 +10,21 @@
 
         <div class="container">
             <div class="jumbotron">
-                <h1>Location Management</h1>
-                <hr class="separator">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h1>Location Management</h1>
+                    </div>
+                </div>
 
-                <p>
-                    <button class="btn btn-primary add-location" type="button" onclick="goToAddLocations('{% url 'journal:add_location' %}')">
-                        {% bootstrap_icon "plus" %}
-                         Add Location
-                    </button>
-                </p>
-                {% render_table locations_table %}
+                <div class="panel-body">
+                    <p>
+                        <button class="btn btn-primary add-location" type="button" onclick="goToAddLocations('{% url 'journal:add_location' %}')">
+                            {% bootstrap_icon "plus" %}
+                             Add Location
+                        </button>
+                    </p>
+                    {% render_table locations_table %}
+                </div>
             </div>
         </div>
     {% endblock %}

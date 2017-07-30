@@ -2,12 +2,6 @@ h1 {
     font-weight: bold;
 }
 
-.separator {
-    background-color: #8c8c8c;
-    height: 1px;
-    margin-bottom: 4%;
-}
-
 .edit_server_button {
     margin-top: 2%;
 }

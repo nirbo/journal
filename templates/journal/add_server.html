@@ -8,19 +8,24 @@
 
         <div class="container">
             <div class="jumbotron">
-                <h1>Add Server</h1>
-                <hr class="separator">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h1>Add Server</h1>
+                    </div>
+                </div>
 
-                <form method="POST">
-                    {% csrf_token %}
-                    {% bootstrap_form add_server_form %}
+                <div class="panel-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        {% bootstrap_form add_server_form %}
 
-                    {% buttons %}
-                    <button type="submit" class="btn btn-primary add_server_button">
-                        {% bootstrap_icon "plus" %} Add Server
-                    </button>
-                    {% endbuttons %}
-                </form>
+                        {% buttons %}
+                            <button type="submit" class="btn btn-primary add_server_button">
+                                {% bootstrap_icon "plus" %} Add Server
+                            </button>
+                        {% endbuttons %}
+                    </form>
+                </div>
             </div>
         </div>
     {% endblock %}
