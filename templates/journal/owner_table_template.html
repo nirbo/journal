@@ -42,9 +42,9 @@
                     {% if 'Unassigned' != row.record.owner_name %}
                     <div class="table-action-buttons">
                         <a href="/journal/editOwner/{{ row.record.id }}">
-                            <input type="button" class="btn btn-warning edit-button" value="Edit">
+                            <input type="button" class="btn btn-warning edit-button hvr-grow-shadow" value="Edit">
                         </a>
-                        <input type="button" class="btn btn-danger delete-button" value="Delete" onclick="deleteOwnerConfirm('{{ row.record.id }}', '{{ row.record.owner_name }}');">
+                        <input type="button" class="btn btn-danger delete-button hvr-grow-shadow" value="Delete" onclick="deleteOwnerConfirm('{{ row.record.id }}', '{{ row.record.owner_name }}');">
                     </div>
                     {% endif %}
                 </td>

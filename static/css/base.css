@@ -1,9 +1,21 @@
+#location-table, #owner-table, #server-table, #virtual-ip-table {
+    -webkit-box-shadow: 0 0 10px gray;
+    -moz-box-shadow: 0 0 10px gray;
+    box-shadow: 0 0 10px gray;
+}
+
 .container {
     width: 100%;
 }
 
 .glyphicon-cog {
     font-size: 20px;
+}
+
+.panel {
+    -webkit-box-shadow: 0 0 10px gray;
+    -moz-box-shadow: 0 0 10px gray;
+    box-shadow: 0 0 10px gray;
 }
 
 body {
