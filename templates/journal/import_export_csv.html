@@ -14,7 +14,7 @@
         <div class="jumbotron">
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    <h1>Import/Export CSV</h1>
+                    <h2>Import/Export CSV</h2>
                 </div>
                 <div class="panel-body">
                     <p>
@@ -40,13 +40,13 @@
                                 {% csrf_token %}
                                 {{ form.file }}
 
-                                <input type="submit" id="physical-servers-submit" name="physical-servers-submit" value="Upload CSV" class="btn btn-success upload-csv-button">
+                                <input type="submit" id="physical-servers-submit" name="physical-servers-submit" value="Upload CSV" class="btn btn-success upload-csv-button hvr-grow-shadow">
                             </form>
 
                             <div class="import-export-buttons-container">
-                                <input type="button" value="Import CSV Data" class="btn btn-primary" onclick="importPhysicalWarning()">
-                                <input type="button" value="Delete Uploaded CSVs" class="btn btn-danger" onclick="clearAllCsv()">
-                                <input type="button" value="Export Physical Servers" class="btn btn-warning" onclick="exportPhysicalCsv()">
+                                <input type="button" value="Import CSV Data" class="btn btn-primary button-spacing hvr-grow-shadow" onclick="importPhysicalWarning()">
+                                <input type="button" value="Delete Uploaded CSVs" class="btn btn-danger button-spacing hvr-grow-shadow" onclick="clearAllCsv()">
+                                <input type="button" value="Export Physical Servers" class="btn btn-warning button-spacing hvr-grow-shadow" onclick="exportPhysicalCsv()">
                             </div>
                         </div>
                     </div>
@@ -59,13 +59,13 @@
                                 {% csrf_token %}
                                 {{ form.file }}
 
-                                <input type="submit" id="virtual-ips-submit" name="virtual-ips-submit" value="Upload CSV" class="btn btn-success upload-csv-button">
+                                <input type="submit" id="virtual-ips-submit" name="virtual-ips-submit" value="Upload CSV" class="btn btn-success upload-csv-button hvr-grow-shadow">
                             </form>
 
                             <div class="import-export-buttons-container">
-                                <input type="button" value="Import CSV Data" class="btn btn-primary" onclick="importVirtualWarning()">
-                                <input type="button" value="Delete Uploaded CSVs" class="btn btn-danger" onclick="clearAllCsv()">
-                                <input type="button" value="Export Virtual IPs" class="btn btn-warning" onclick="exportVirtualCsv()">
+                                <input type="button" value="Import CSV Data" class="btn btn-primary button-spacing hvr-grow-shadow" onclick="importVirtualWarning()">
+                                <input type="button" value="Delete Uploaded CSVs" class="btn btn-danger button-spacing hvr-grow-shadow" onclick="clearAllCsv()">
+                                <input type="button" value="Export Virtual IPs" class="btn btn-warning button-spacing hvr-grow-shadow" onclick="exportVirtualCsv()">
                             </div>
                         </div>
                     </div>

@@ -1,9 +1,9 @@
-h1 {
-    font-weight: bold;
-}
-
 .add-server-button {
     float: right;
     margin: 0 auto 1%;
     width: 9%;
+}
+
+h2 {
+    font-weight: bold;
 }

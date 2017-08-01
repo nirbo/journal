@@ -39,6 +39,7 @@ def upload_csv_file(request):
 
             if new_file.filename().lower().endswith('.csv'):
                 new_file.save()
+                messages.success(request, 'CSV file uploaded')
             else:
                 messages.error(request, 'Wrong file type uploaded; please try again with a CSV file')
                 return HttpResponseRedirect('/journal/importExportCsv/')
@@ -246,28 +247,27 @@ def edit_server_form_view(request, id):
 
 
 def search(request, pattern):
-    context = ''
+    # context = ''
+    search_pattern = ''
 
     if request.method == 'POST':
         search_pattern = request.POST.get('search', '')
-        table = search_lookup(request, search_pattern, pattern)
-
-        RequestConfig(request).configure(table)
-        context = {'search_results': table,
-                   'search_term': search_pattern}
-
     elif request.method == 'GET':
         search_pattern = request.GET.get('search', '')
-        table = search_lookup(request, search_pattern, pattern)
 
-        RequestConfig(request).configure(table)
-        context = {'search_results': table,
-                   'search_term': search_pattern}
+    physical_server_table = physical_search_lookup(request, search_pattern, pattern)
+    virtual_ips_table = virtual_search_lookup(request, search_pattern, pattern)
+
+    RequestConfig(request).configure(physical_server_table)
+    RequestConfig(request).configure(virtual_ips_table)
+    context = {'physical_search_results': physical_server_table,
+               'virtual_search_results': virtual_ips_table,
+               'search_term': search_pattern}
 
     return render(request, 'journal/search.html', context)
 
 
-def search_lookup(request, search_pattern, pattern):
+def physical_search_lookup(request, search_pattern, pattern):
     servers = Server.objects.all()
     owners = Owner.objects.all()
     locations = Location.objects.all()
@@ -293,6 +293,36 @@ def search_lookup(request, search_pattern, pattern):
                 table_data.add(server_values[0])
 
         table = ServerTable(servers.filter(id__in=list(table_data)).order_by('name'))
+
+    return table
+
+
+def virtual_search_lookup(request, search_pattern, pattern):
+    virtual_ips = VirtualIP.objects.all()
+    owners = Owner.objects.all()
+    locations = Location.objects.all()
+    table_data = set()
+    table = ''
+
+    if pattern:
+        search_pattern = pattern
+
+    for virtual_ip in virtual_ips.values():
+        virtual_ip_values = []
+
+        for key, value in virtual_ip.items():
+            if 'owner' in key:
+                virtual_ip_values.append(list(owners.filter(id=value))[-1].owner_name)
+            elif 'location' in key:
+                virtual_ip_values.append(list(locations.filter(id=value))[-1].physical_location)
+            else:
+                virtual_ip_values.append(value)
+
+        for value in virtual_ip_values:
+            if search_pattern.lower() in str(value).lower():
+                table_data.add(virtual_ip_values[0])
+
+        table = VirtualIpTable(virtual_ips.filter(id__in=list(table_data)).order_by('ip_address'))
 
     return table
 
