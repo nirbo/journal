@@ -24,10 +24,46 @@
                                             </div>
                                             <div class="panel-body">
                                                 <ul class="list-group">
-                                                    <li class="list-group-item">
-                                                        <span class="badge">{{ all_servers_count }}</span>
-                                                        Total Physical Servers:
-                                                    </li>
+                                                    <a class="list-group-item active" data-toggle="collapse" data-target="#physical-total-count">
+                                                        Total
+                                                        <i class="fa fa-angle-down collapse-i"></i>
+                                                    </a>
+                                                    <div id="physical-total-count" class="panel-collapse collapse in">
+                                                        <li class="list-group-item">
+                                                            Total:
+                                                            <span class="badge badge-blue">{{ all_servers_count }}</span>
+                                                        </li>
+                                                    </div>
+                                                </ul>
+
+                                                <ul class="list-group">
+                                                    <a class="list-group-item active" data-toggle="collapse" data-target="#server-location-count-collapse">
+                                                        Count By Location
+                                                        <i class="fa fa-angle-down collapse-i"></i>
+                                                    </a>
+                                                    <div id="server-location-count-collapse" class="panel-collapse collapse in">
+                                                        {% for location_name, server_count in server_count_by_location.items %}
+                                                        <li class="list-group-item">
+                                                            {{ location_name }}:
+                                                            <span class="badge badge-blue">{{ server_count }}</span>
+                                                        </li>
+                                                        {% endfor %}
+                                                    </div>
+                                                </ul>
+
+                                                <ul class="list-group">
+                                                    <a class="list-group-item active" data-toggle="collapse" data-target="#physical-owner-count-collapse">
+                                                        Count By Owner
+                                                        <i class="fa fa-angle-down collapse-i"></i>
+                                                    </a>
+                                                    <div id="physical-owner-count-collapse" class="panel-collapse collapse in">
+                                                        {% for owner_name, server_count in server_count_by_owner.items %}
+                                                        <li class="list-group-item">
+                                                            {{ owner_name }}:
+                                                            <span class="badge badge-blue">{{ server_count }}</span>
+                                                        </li>
+                                                        {% endfor %}
+                                                    </div>
                                                 </ul>
                                             </div>
                                         </div>
@@ -38,11 +74,47 @@
                                                 <h3>Virtual IPs</h3>
                                             </div>
                                             <div class="panel-body">
-                                                <ul class="list-group">
-                                                    <li class="list-group-item">
-                                                        <span class="badge">999</span>
-                                                        Placeholder
-                                                    </li>
+                                                <ul class="list-group virtual-list-group">
+                                                    <a class="list-group-item active" data-toggle="collapse" data-target="#virtual-total-count">
+                                                        Total
+                                                        <i class="fa fa-angle-down collapse-i"></i>
+                                                    </a>
+                                                    <div id="virtual-total-count" class="panel-collapse collapse in">
+                                                        <li class="list-group-item">
+                                                            Total:
+                                                            <span class="badge badge-red">{{ all_virtual_count }}</span>
+                                                        </li>
+                                                    </div>
+                                                </ul>
+
+                                                <ul class="list-group virtual-list-group">
+                                                    <a class="list-group-item active" data-toggle="collapse" data-target="#virtual-location-count-collapse">
+                                                        Count By Location
+                                                        <i class="fa fa-angle-down collapse-i"></i>
+                                                    </a>
+                                                    <div id="virtual-location-count-collapse" class="panel-collapse collapse in">
+                                                        {% for location_name, virtual_count in virtual_count_by_location.items %}
+                                                        <li class="list-group-item">
+                                                            {{ location_name }}:
+                                                            <span class="badge badge-red">{{ virtual_count }}</span>
+                                                        </li>
+                                                        {% endfor %}
+                                                    </div>
+                                                </ul>
+
+                                                <ul class="list-group virtual-list-group">
+                                                    <a class="list-group-item active" data-toggle="collapse" data-target="#virtual-owner-count-collapse">
+                                                        Count By Owner
+                                                        <i class="fa fa-angle-down collapse-i"></i>
+                                                    </a>
+                                                    <div id="virtual-owner-count-collapse" class="panel-collapse collapse in">
+                                                        {% for owner_name, virtual_count in virtual_count_by_owner.items %}
+                                                        <li class="list-group-item">
+                                                            {{ owner_name }}:
+                                                            <span class="badge badge-red">{{ virtual_count }}</span>
+                                                        </li>
+                                                        {% endfor %}
+                                                    </div>
                                                 </ul>
                                             </div>
                                         </div>

@@ -14,18 +14,42 @@ import tablib
 
 
 def index(request):
+    context = build_summary_content()
+    return render(request, 'journal/index.html', context)
+
+
+def build_summary_content():
     physical_servers = Server.objects.all()
+    virtual_ips = VirtualIP.objects.all()
     locations = Location.objects.all()
     owners = Owner.objects.all()
-    servers_by_location = {}
+    server_count_by_location = {}
+    server_count_by_owner = {}
+    virtual_count_by_location = {}
+    virtual_count_by_owner = {}
 
     for location in locations:
-        servers_by_location[location.physical_location] = physical_servers.filter(location__physical_location__exact=location.physical_location)
+        server_count_by_location[location.physical_location] = physical_servers.filter(
+            location__physical_location__exact=location.physical_location).count()
+
+        virtual_count_by_location[location.physical_location] = virtual_ips.filter(
+            location__physical_location__exact=location.physical_location).count()
+
+    for owner in owners:
+        server_count_by_owner[owner.owner_name] = physical_servers.filter(
+            owner__owner_name__exact=owner.owner_name).count()
+
+        virtual_count_by_owner[owner.owner_name] = virtual_ips.filter(
+            owner__owner_name__exact=owner.owner_name).count()
 
     context = {'all_servers_count': physical_servers.count(),
-               'servers_by_location': servers_by_location}
+               'server_count_by_location': server_count_by_location,
+               'server_count_by_owner': server_count_by_owner,
+               'all_virtual_count': virtual_ips.count(),
+               'virtual_count_by_location': virtual_count_by_location,
+               'virtual_count_by_owner': virtual_count_by_owner}
 
-    return render(request, 'journal/index.html', context)
+    return context
 
 
 def settings(request):
