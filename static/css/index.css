@@ -1,0 +1,26 @@
+#summary-table {
+    table-layout: fixed;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.summary-table-wrapper {
+
+}
+
+.summary-panel {
+    margin-left: 1.5%;
+    margin-right: 1.5%;
+}
+
+.panel-heading-center-text {
+    text-align: center;
+}
+
+td {
+    width: 50%;
+}
+
+h2 {
+    font-weight: bold;
+}

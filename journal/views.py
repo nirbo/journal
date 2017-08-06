@@ -14,7 +14,18 @@ import tablib
 
 
 def index(request):
-    return render(request, 'journal/index.html')
+    physical_servers = Server.objects.all()
+    locations = Location.objects.all()
+    owners = Owner.objects.all()
+    servers_by_location = {}
+
+    for location in locations:
+        servers_by_location[location.physical_location] = physical_servers.filter(location__physical_location__exact=location.physical_location)
+
+    context = {'all_servers_count': physical_servers.count(),
+               'servers_by_location': servers_by_location}
+
+    return render(request, 'journal/index.html', context)
 
 
 def settings(request):
@@ -618,5 +629,3 @@ def delete_ntp_server(request, id):
         messages.error(request, 'Failed to Delete NTP')
 
     return redirect('/journal/networkDetails/')
-
-
