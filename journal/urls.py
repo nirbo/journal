@@ -31,4 +31,8 @@ urlpatterns = [
     url(r'^add_virtual_ip/$', views.add_virtual_ip, name='add_virtual_ip'),
     url(r'^editVirtualIP/(?P<id>\d+)$', views.edit_virtual_ip, name='edit_virtual_ip'),
     url(r'^deleteVirtualIP/(?P<id>\d+)$', views.delete_virtual_ip, name='delete_virtual_ip'),
+    url(r'^networkDetails/$', views.network_details, name='network_details'),
+    url(r'^addDnsServer/$', views.add_dns_server, name='add_dns_server'),
+    url(r'^editDnsServer/(?P<id>\d+)$', views.edit_dns_server, name='edit_dns_server'),
+    url(r'^deleteDnsServer/(?P<id>\d+)$', views.delete_dns_server, name='delete_dns_server'),
 ]

@@ -1,5 +1,5 @@
 import django_tables2 as tables
-from journal.models import Server, Location, Owner, VirtualIP
+from journal.models import Server, Location, Owner, VirtualIP, DNS
 
 
 class ServerTable(tables.Table):
@@ -52,3 +52,15 @@ class VirtualIpTable(tables.Table):
         order_by_field = 'orderby'
         per_page_field = 'display'
 
+
+class DNSTable(tables.Table):
+    class Meta:
+        model = DNS
+        attrs = {'class': 'table table-striped table-bordered table-hover'}
+        template = 'journal/dns_servers_table_template.html'
+        per_page = 10
+        empty_text = "No DNS Servers found."
+        prefix = 'dns'
+        page_field = 'page'
+        order_by_field = 'orderby'
+        per_page_field = 'display'

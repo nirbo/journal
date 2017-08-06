@@ -14,6 +14,10 @@ function goToAddVirtualIP(url) {
     window.location.href = url
 }
 
+function goToAddDns(url) {
+    window.location.href = url
+}
+
 function deleteOwnerFailed() {
     $.alert({
         theme: 'material',

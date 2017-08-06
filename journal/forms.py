@@ -1,5 +1,5 @@
 from django import forms
-from journal.models import Server, Location, Owner, VirtualIP
+from journal.models import Server, Location, Owner, VirtualIP, DNS
 
 
 class CSVFileForm(forms.Form):
@@ -333,3 +333,15 @@ class EditVirtualIpForm(forms.ModelForm):
 
         if error_field:
             raise forms.ValidationError("The IP address is already in use by another field of this record", error_field)
+
+
+class AddDNSForm(forms.ModelForm):
+    class Meta:
+        model = DNS
+        fields = '__all__'
+
+
+class EditDNSForm(forms.ModelForm):
+    class Meta:
+        model = DNS
+        fields = '__all__'

@@ -1,0 +1,15 @@
+.search-tab {
+    margin-bottom: 0.6%;
+    font-weight: bold;
+    font-size: 1.25em;
+}
+
+.add-dns-button {
+    float: right;
+    margin: 0 auto 1%;
+    width: 9%;
+}
+
+h2 {
+    font-weight: bold;
+}

@@ -51,3 +51,10 @@ class CSVUpload(models.Model):
     def filename(self):
         return os.path.basename(self.file.name)
 
+
+class DNS(models.Model):
+    dns_address = models.GenericIPAddressField(blank=False, unique=True, null=False, protocol='both', default='')
+    dns_location = models.ForeignKey('Location')
+
+    def __str__(self):
+        return self.dns_address

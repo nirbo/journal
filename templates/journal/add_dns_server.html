@@ -1,0 +1,32 @@
+{% extends "journal/base.html" %}
+{% load bootstrap3 %}
+
+<!DOCTYPE html>
+    {% block body_block %}
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'css/add_dns_server.css' %}">
+
+        <div class="container">
+            <div class="jumbotron">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h2>Add DNS</h2>
+                </div>
+            </div>
+
+                <div class="panel-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        {% bootstrap_form add_dns_form %}
+
+                        {% buttons %}
+                            <button type="submit" class="btn btn-primary add-dns-server hvr-grow-shadow">
+                                {% bootstrap_icon "plus" %}
+                                Add DNS
+                            </button>
+                        {% endbuttons %}
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endblock %}

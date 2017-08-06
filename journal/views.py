@@ -5,9 +5,9 @@ from django_tables2 import RequestConfig
 from import_export import resources
 from journal.admin import ServerResource, VirtualIPResource
 from journal.forms import AddServerForm, EditServerForm, EditOwnerForm, AddOwnerForm, AddLocationForm, \
-    EditLocationForm, AddVirtualIpForm, EditVirtualIpForm, CSVFileForm
-from journal.models import Server, Location, Owner, VirtualIP, CSVUpload
-from journal.tables import ServerTable, OwnerTable, LocationTable, VirtualIpTable
+    EditLocationForm, AddVirtualIpForm, EditVirtualIpForm, CSVFileForm, AddDNSForm, EditDNSForm
+from journal.models import Server, Location, Owner, VirtualIP, CSVUpload, DNS
+from journal.tables import ServerTable, OwnerTable, LocationTable, VirtualIpTable, DNSTable
 import os.path
 import shutil
 import tablib
@@ -525,3 +525,51 @@ def delete_virtual_ip(request, id):
         return HttpResponseRedirect('/journal/search/{}'.format(next_page))
 
     return redirect('/journal/manageVirtualIP/')
+
+
+def network_details(request):
+    dns_table = DNSTable(DNS.objects.order_by('dns_address'))
+    RequestConfig(request).configure(dns_table)
+    context = {'dns_table': dns_table}
+
+    return render(request, 'journal/network_details.html', context)
+
+
+def add_dns_server(request):
+    if request.method == 'POST':
+        add_dns_form = AddDNSForm(request.POST)
+
+        if add_dns_form.is_valid():
+            add_dns_form.save(commit=True)
+            return redirect('/journal/networkDetails/')
+    else:
+        add_dns_form = AddDNSForm()
+
+    context = {'add_dns_form': add_dns_form}
+
+    return render(request, 'journal/add_dns_server.html', context)
+
+
+def edit_dns_server(request, id):
+    dns_to_edit = DNS.objects.get(id=id)
+    edit_dns_form = EditDNSForm(request.POST or None, instance=dns_to_edit)
+
+    if request.method == 'POST':
+        if edit_dns_form.is_valid():
+            edit_dns_form.save()
+
+            return redirect('/journal/networkDetails/')
+    else:
+        edit_dns_form = EditDNSForm(instance=dns_to_edit)
+
+    context = {'edit_dns_form': edit_dns_form,
+               'id': id}
+
+    return render(request, 'journal/edit_dns_server.html', context)
+
+
+def delete_dns_server(request, id):
+    if not DNS.objects.get(id=id).delete():
+        messages.error(request, 'Failed to Delete DNS')
+
+    return redirect('/journal/networkDetails/')
