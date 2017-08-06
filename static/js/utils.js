@@ -214,6 +214,15 @@ function exportVirtualCsv() {
     });
 }
 
+function downloadPhysicalCSVTemplate() {
+    var redirect = '/journal/downloadPhysicalCSVTemplate/';
+    window.location.href = redirect
+}
+
+function downloadVirtualCSVTemplate() {
+    var redirect = '/journal/downloadVirtualCSVTemplate/';
+    window.location.href = redirect
+}
 
 window.setTimeout(function () {
     $(".alert-danger, .alert-success").fadeTo(500, 0).slideUp(500, function () {

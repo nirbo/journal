@@ -2,16 +2,17 @@
     margin-top: 2.5%;
 }
 
-.upload-csv-button {
-    margin-top: 1%;
-}
-
 .import-export-buttons-container {
     margin-top: 1%;
 }
 
 .button-spacing {
     margin-right: 0.5%;
+}
+
+.button-spacing-template {
+    margin-right: 0.5%;
+    margin-left: 0.35%;
 }
 
 h2 {

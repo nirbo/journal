@@ -139,6 +139,9 @@ def export_physical_servers(request):
         response['Content-Disposition'] = 'attachment; filename={}'.format(smart_str(os.path.basename(export_file)))
         response['X-Sendfile'] = smart_str(export_file)
 
+        if os.path.isfile(export_file):
+            os.remove(export_file)
+
         return response
 
     except Exception:
@@ -166,12 +169,36 @@ def export_virtual_ips(request):
         response['Content-Disposition'] = 'attachment; filename={}'.format(smart_str(os.path.basename(export_file)))
         response['X-Sendfile'] = smart_str(export_file)
 
+        if os.path.isfile(export_file):
+            os.remove(export_file)
+
         return response
 
     except Exception:
         messages.error(request, 'Failed to export virtual IPs CSV file')
 
     return HttpResponseRedirect('/journal/importExportCsv/')
+
+
+def download_physical_csv_template(request):
+    physical_servers_template_file = 'media/csv/import_templates/physical_server_template.csv'
+
+    response = HttpResponse(open(physical_servers_template_file, 'rb'), content_type='application/force-download')
+    response['Content-Disposition'] = 'attachment; filename={}'.format(smart_str(os.path.basename(physical_servers_template_file)))
+    response['X-Sendfile'] = smart_str(physical_servers_template_file)
+
+    return response
+
+
+def download_virtual_csv_template(request):
+    virtual_ips_template_file = 'media/csv/import_templates/virtual_ips_template.csv'
+
+    response = HttpResponse(open(virtual_ips_template_file, 'rb'), content_type='application/force-download')
+    response['Content-Disposition'] = 'attachment; filename={}'.format(
+        smart_str(os.path.basename(virtual_ips_template_file)))
+    response['X-Sendfile'] = smart_str(virtual_ips_template_file)
+
+    return response
 
 
 def delete_all_csvs(request):

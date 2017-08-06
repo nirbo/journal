@@ -40,7 +40,10 @@
                                 {% csrf_token %}
                                 {{ form.file }}
 
-                                <input type="submit" id="physical-servers-submit" name="physical-servers-submit" value="Upload CSV" class="btn btn-success upload-csv-button hvr-grow-shadow">
+                                <div class="import-export-buttons-container">
+                                    <input type="submit" id="physical-servers-submit" name="physical-servers-submit" value="Upload CSV" class="btn btn-success button-spacing hvr-grow-shadow">
+                                    <input type="button" value="Download CSV Template" class="btn btn-warning button-spacing-template hvr-grow-shadow" onclick="downloadPhysicalCSVTemplate()">
+                                </div>
                             </form>
 
                             <div class="import-export-buttons-container">
@@ -50,6 +53,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div id="virtual-ips" class="panel panel-warning">
                         <div class="panel-heading">
                             <h4>Import/Export Virtual IPs</h4>
@@ -59,7 +63,10 @@
                                 {% csrf_token %}
                                 {{ form.file }}
 
-                                <input type="submit" id="virtual-ips-submit" name="virtual-ips-submit" value="Upload CSV" class="btn btn-success upload-csv-button hvr-grow-shadow">
+                                <div class="import-export-buttons-container">
+                                    <input type="submit" id="virtual-ips-submit" name="virtual-ips-submit" value="Upload CSV" class="btn btn-success button-spacing hvr-grow-shadow">
+                                    <input type="button" value="Download CSV Template" class="btn btn-warning button-spacing-template hvr-grow-shadow" onclick="downloadVirtualCSVTemplate()">
+                                </div>
                             </form>
 
                             <div class="import-export-buttons-container">
