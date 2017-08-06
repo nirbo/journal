@@ -1,5 +1,5 @@
 import django_tables2 as tables
-from journal.models import Server, Location, Owner, VirtualIP, DNS
+from journal.models import Server, Location, Owner, VirtualIP, DNS, NTP
 
 
 class ServerTable(tables.Table):
@@ -61,6 +61,19 @@ class DNSTable(tables.Table):
         per_page = 10
         empty_text = "No DNS Servers found."
         prefix = 'dns'
+        page_field = 'page'
+        order_by_field = 'orderby'
+        per_page_field = 'display'
+
+
+class NTPTable(tables.Table):
+    class Meta:
+        model = NTP
+        attrs = {'class': 'table table-striped table-bordered table-hover'}
+        template = 'journal/ntp_servers_table_template.html'
+        per_page = 10
+        empty_text = "No NTP Servers found."
+        prefix = 'ntp'
         page_field = 'page'
         order_by_field = 'orderby'
         per_page_field = 'display'

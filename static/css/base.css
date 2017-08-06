@@ -1,4 +1,4 @@
-#location-table, #owner-table, #server-table, #virtual-ip-table, #dns-table{
+#location-table, #owner-table, #server-table, #virtual-ip-table, #dns-table, #ntp-table {
     -webkit-box-shadow: 0 0 10px gray;
     -moz-box-shadow: 0 0 10px gray;
     box-shadow: 0 0 10px gray;

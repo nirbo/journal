@@ -58,3 +58,11 @@ class DNS(models.Model):
 
     def __str__(self):
         return self.dns_address
+
+
+class NTP(models.Model):
+    ntp_address = models.GenericIPAddressField(blank=False, unique=True, null=False, protocol='both', default='')
+    ntp_location = models.ForeignKey('Location')
+
+    def __str__(self):
+        return self.ntp_address

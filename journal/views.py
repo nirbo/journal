@@ -5,9 +5,9 @@ from django_tables2 import RequestConfig
 from import_export import resources
 from journal.admin import ServerResource, VirtualIPResource
 from journal.forms import AddServerForm, EditServerForm, EditOwnerForm, AddOwnerForm, AddLocationForm, \
-    EditLocationForm, AddVirtualIpForm, EditVirtualIpForm, CSVFileForm, AddDNSForm, EditDNSForm
-from journal.models import Server, Location, Owner, VirtualIP, CSVUpload, DNS
-from journal.tables import ServerTable, OwnerTable, LocationTable, VirtualIpTable, DNSTable
+    EditLocationForm, AddVirtualIpForm, EditVirtualIpForm, CSVFileForm, AddDNSForm, EditDNSForm, AddNTPForm, EditNTPForm
+from journal.models import Server, Location, Owner, VirtualIP, CSVUpload, DNS, NTP
+from journal.tables import ServerTable, OwnerTable, LocationTable, VirtualIpTable, DNSTable, NTPTable
 import os.path
 import shutil
 import tablib
@@ -529,8 +529,13 @@ def delete_virtual_ip(request, id):
 
 def network_details(request):
     dns_table = DNSTable(DNS.objects.order_by('dns_address'))
+    ntp_table = NTPTable(NTP.objects.order_by('ntp_address'))
+
     RequestConfig(request).configure(dns_table)
-    context = {'dns_table': dns_table}
+    RequestConfig(request).configure(ntp_table)
+
+    context = {'dns_table': dns_table,
+               'ntp_table': ntp_table}
 
     return render(request, 'journal/network_details.html', context)
 
@@ -573,3 +578,45 @@ def delete_dns_server(request, id):
         messages.error(request, 'Failed to Delete DNS')
 
     return redirect('/journal/networkDetails/')
+
+
+def add_ntp_server(request):
+    if request.method == 'POST':
+        add_ntp_form = AddNTPForm(request.POST)
+
+        if add_ntp_form.is_valid():
+            add_ntp_form.save(commit=True)
+            return redirect('/journal/networkDetails/')
+    else:
+        add_ntp_form = AddNTPForm()
+
+    context = {'add_ntp_form': add_ntp_form}
+
+    return render(request, 'journal/add_ntp_server.html', context)
+
+
+def edit_ntp_server(request, id):
+    ntp_to_edit = NTP.objects.get(id=id)
+    edit_ntp_form = EditNTPForm(request.POST or None, instance=ntp_to_edit)
+
+    if request.method == 'POST':
+        if edit_ntp_form.is_valid():
+            edit_ntp_form.save()
+
+            return redirect('/journal/networkDetails/')
+    else:
+        edit_ntp_form = EditNTPForm(instance=ntp_to_edit)
+
+    context = {'edit_ntp_form': edit_ntp_form,
+               'id': id}
+
+    return render(request, 'journal/edit_ntp_server.html', context)
+
+
+def delete_ntp_server(request, id):
+    if not NTP.objects.get(id=id).delete():
+        messages.error(request, 'Failed to Delete NTP')
+
+    return redirect('/journal/networkDetails/')
+
+

@@ -131,7 +131,7 @@ function deleteVirtualIpConfirm(id, ipAddress, searchTerm) {
 }
 
 function deleteDnsConfirm(id, dnsAddress, searchTerm) {
-    var redirect = '/journal/deleteDns/' + id + '?next=' + searchTerm;
+    var redirect = '/journal/deleteDnsServer/' + id + '?next=' + searchTerm;
 
     if (searchTerm === null) {
         redirect = '/journal/deleteDnsServer/' + id;
@@ -140,6 +140,41 @@ function deleteDnsConfirm(id, dnsAddress, searchTerm) {
     $.confirm({
         theme: 'material',
         title: 'Delete DNS: ' + dnsAddress,
+        content: 'Proceed to delete?',
+        icon: 'glyphicon glyphicon-exclamation-sign',
+        closeIcon: true,
+        closeIconClass: 'fa fa-close',
+        escapeKey: 'cancel',
+        backgroundDismiss: true,
+        columnClass: 'col-md-6 col-md-offset-3',
+        type: 'red',
+        typeAnimated: true,
+        animation: 'scaleY',
+        closeAnimation: 'scaleY',
+        animationBounce: 1.25,
+        buttons: {
+            confirm_delete: {
+                text: 'Delete',
+                btnClass: 'btn-red',
+                action: function () {
+                    window.location.href = redirect
+                }
+            },
+            cancel: function () {}
+        }
+    });
+}
+
+function deleteNtpConfirm(id, ntpAddress, searchTerm) {
+    var redirect = '/journal/deleteNtpServer/' + id + '?next=' + searchTerm;
+
+    if (searchTerm === null) {
+        redirect = '/journal/deleteNtpServer/' + id;
+    }
+
+    $.confirm({
+        theme: 'material',
+        title: 'Delete NTP: ' + ntpAddress,
         content: 'Proceed to delete?',
         icon: 'glyphicon glyphicon-exclamation-sign',
         closeIcon: true,

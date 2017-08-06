@@ -35,4 +35,7 @@ urlpatterns = [
     url(r'^addDnsServer/$', views.add_dns_server, name='add_dns_server'),
     url(r'^editDnsServer/(?P<id>\d+)$', views.edit_dns_server, name='edit_dns_server'),
     url(r'^deleteDnsServer/(?P<id>\d+)$', views.delete_dns_server, name='delete_dns_server'),
+    url(r'^addNtpServer/$', views.add_ntp_server, name='add_ntp_server'),
+    url(r'^editNtpServer/(?P<id>\d+)$', views.edit_ntp_server, name='edit_ntp_server'),
+    url(r'^deleteNtpServer/(?P<id>\d+)$', views.delete_ntp_server, name='delete_ntp_server'),
 ]

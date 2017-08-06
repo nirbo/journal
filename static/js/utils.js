@@ -18,6 +18,10 @@ function goToAddDns(url) {
     window.location.href = url
 }
 
+function goToAddNtp(url) {
+    window.location.href = url
+}
+
 function deleteOwnerFailed() {
     $.alert({
         theme: 'material',

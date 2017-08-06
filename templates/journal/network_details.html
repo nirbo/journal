@@ -35,11 +35,19 @@
                                          Add DNS
                                     </button>
                                 </p>
+
                                 {% render_table dns_table %}
                             </div>
 
                             <div class="tab-pane" id="ntp-tab">
-{#                                {% render_table ntp_table %}#}
+                                <p>
+                                    <button class="btn btn-primary add-ntp-button hvr-grow-shadow" type="button" onclick="goToAddNtp('{% url 'journal:add_ntp_server' %}')">
+                                        {% bootstrap_icon "plus" %}
+                                         Add NTP
+                                    </button>
+                                </p>
+
+                                {% render_table ntp_table %}
                             </div>
                         </div>
                     </div>

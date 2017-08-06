@@ -4,7 +4,7 @@
     font-size: 1.25em;
 }
 
-.add-dns-button {
+.add-dns-button, .add-ntp-button {
     float: right;
     margin: 0 auto 1%;
     width: 9%;
