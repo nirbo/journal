@@ -22,6 +22,10 @@ function goToAddNtp(url) {
     window.location.href = url
 }
 
+function goToAddGateway(url) {
+    window.location.href = url
+}
+
 function deleteOwnerFailed() {
     $.alert({
         theme: 'material',

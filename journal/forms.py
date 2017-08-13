@@ -1,5 +1,5 @@
 from django import forms
-from journal.models import Server, Location, Owner, VirtualIP, DNS, NTP
+from journal.models import Server, Location, Owner, VirtualIP, DNS, NTP, Gateway
 
 
 class CSVFileForm(forms.Form):
@@ -356,4 +356,16 @@ class AddNTPForm(forms.ModelForm):
 class EditNTPForm(forms.ModelForm):
     class Meta:
         model = NTP
+        fields = '__all__'
+
+
+class AddGatewayForm(forms.ModelForm):
+    class Meta:
+        model = Gateway
+        fields = '__all__'
+
+
+class EditGatewayForm(forms.ModelForm):
+    class Meta:
+        model = Gateway
         fields = '__all__'

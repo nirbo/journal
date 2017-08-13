@@ -5,9 +5,10 @@ from django_tables2 import RequestConfig
 from import_export import resources
 from journal.admin import ServerResource, VirtualIPResource
 from journal.forms import AddServerForm, EditServerForm, EditOwnerForm, AddOwnerForm, AddLocationForm, \
-    EditLocationForm, AddVirtualIpForm, EditVirtualIpForm, CSVFileForm, AddDNSForm, EditDNSForm, AddNTPForm, EditNTPForm
-from journal.models import Server, Location, Owner, VirtualIP, CSVUpload, DNS, NTP
-from journal.tables import ServerTable, OwnerTable, LocationTable, VirtualIpTable, DNSTable, NTPTable
+    EditLocationForm, AddVirtualIpForm, EditVirtualIpForm, CSVFileForm, AddDNSForm, EditDNSForm, AddNTPForm, EditNTPForm, \
+    AddGatewayForm, EditGatewayForm
+from journal.models import Server, Location, Owner, VirtualIP, CSVUpload, DNS, NTP, Gateway
+from journal.tables import ServerTable, OwnerTable, LocationTable, VirtualIpTable, DNSTable, NTPTable, GatewayTable
 import os.path
 import shutil
 import tablib
@@ -565,12 +566,15 @@ def delete_virtual_ip(request, id):
 def network_details(request):
     dns_table = DNSTable(DNS.objects.order_by('dns_address'))
     ntp_table = NTPTable(NTP.objects.order_by('ntp_address'))
+    gateway_table = GatewayTable(Gateway.objects.order_by('address'))
 
     RequestConfig(request).configure(dns_table)
     RequestConfig(request).configure(ntp_table)
+    RequestConfig(request).configure(gateway_table)
 
     context = {'dns_table': dns_table,
-               'ntp_table': ntp_table}
+               'ntp_table': ntp_table,
+               'gateway_table': gateway_table}
 
     return render(request, 'journal/network_details.html', context)
 
@@ -650,6 +654,46 @@ def edit_ntp_server(request, id):
 
 def delete_ntp_server(request, id):
     if not NTP.objects.get(id=id).delete():
+        messages.error(request, 'Failed to Delete NTP')
+
+    return redirect('/journal/networkDetails/')
+
+
+def add_gateway(request):
+    if request.method == 'POST':
+        add_gateway_form = AddGatewayForm(request.POST)
+
+        if add_gateway_form.is_valid():
+            add_gateway_form.save(commit=True)
+            return redirect('/journal/networkDetails/')
+    else:
+        add_gateway_form = AddGatewayForm()
+
+    context = {'add_gateway_form': add_gateway_form}
+
+    return render(request, 'journal/add_gateway.html', context)
+
+
+def edit_gateway(request, id):
+    gateway_to_edit = Gateway.objects.get(id=id)
+    edit_gateway_form = EditGatewayForm(request.POST or None, instance=gateway_to_edit)
+
+    if request.method == 'POST':
+        if edit_gateway_form.is_valid():
+            edit_gateway_form.save()
+
+            return redirect('/journal/networkDetails/')
+    else:
+        edit_gateway_form = EditGatewayForm(instance=gateway_to_edit)
+
+    context = {'edit_gateway_form': edit_gateway_form,
+               'id': id}
+
+    return render(request, 'journal/edit_gateway.html', context)
+
+
+def delete_gateway(request, id):
+    if not Gateway.objects.get(id=id).delete():
         messages.error(request, 'Failed to Delete NTP')
 
     return redirect('/journal/networkDetails/')

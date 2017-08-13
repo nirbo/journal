@@ -199,3 +199,38 @@ function deleteNtpConfirm(id, ntpAddress, searchTerm) {
         }
     });
 }
+
+function deleteGatewayConfirm(id, gatewayAddress, searchTerm) {
+    var redirect = '/journal/deleteGateway/' + id + '?next=' + searchTerm;
+
+    if (searchTerm === null) {
+        redirect = '/journal/deleteGateway/' + id;
+    }
+
+    $.confirm({
+        theme: 'material',
+        title: 'Delete Gateway: ' + gatewayAddress,
+        content: 'Proceed to delete?',
+        icon: 'glyphicon glyphicon-exclamation-sign',
+        closeIcon: true,
+        closeIconClass: 'fa fa-close',
+        escapeKey: 'cancel',
+        backgroundDismiss: true,
+        columnClass: 'col-md-6 col-md-offset-3',
+        type: 'red',
+        typeAnimated: true,
+        animation: 'scaleY',
+        closeAnimation: 'scaleY',
+        animationBounce: 1.25,
+        buttons: {
+            confirm_delete: {
+                text: 'Delete',
+                btnClass: 'btn-red',
+                action: function () {
+                    window.location.href = redirect
+                }
+            },
+            cancel: function () {}
+        }
+    });
+}

@@ -66,3 +66,14 @@ class NTP(models.Model):
 
     def __str__(self):
         return self.ntp_address
+
+
+class Gateway(models.Model):
+    address = models.GenericIPAddressField(blank=False, unique=True, null=False, protocol='both', default='')
+    netmask = models.GenericIPAddressField(blank=False, unique=False, null=False, protocol='both', default='')
+    vlan = models.CharField(max_length=64, blank=True, unique=False, null=True)
+    location = models.ForeignKey('Location')
+    comment = models.CharField(max_length=255, blank=True, unique=False, null=True)
+
+    def __str__(self):
+        return self.address

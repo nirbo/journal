@@ -1,5 +1,5 @@
 import django_tables2 as tables
-from journal.models import Server, Location, Owner, VirtualIP, DNS, NTP
+from journal.models import Server, Location, Owner, VirtualIP, DNS, NTP, Gateway
 
 
 class ServerTable(tables.Table):
@@ -74,6 +74,19 @@ class NTPTable(tables.Table):
         per_page = 10
         empty_text = "No NTP Servers found."
         prefix = 'ntp'
+        page_field = 'page'
+        order_by_field = 'orderby'
+        per_page_field = 'display'
+
+
+class GatewayTable(tables.Table):
+    class Meta:
+        model = Gateway
+        attrs = {'class': 'table table-striped table-bordered table-hover'}
+        template = 'journal/gateway_table_template.html'
+        per_page = 10
+        empty_text = "No Gateways found."
+        prefix = 'gateway'
         page_field = 'page'
         order_by_field = 'orderby'
         per_page_field = 'display'

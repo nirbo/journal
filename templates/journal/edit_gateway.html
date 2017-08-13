@@ -1,0 +1,32 @@
+{% extends "journal/base.html" %}
+{% load bootstrap3 %}
+
+<!DOCTYPE html>
+    {% block body_block %}
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'css/edit_gateway.css' %}">
+
+        <div class="container">
+            <div class="jumbotron">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h2>Edit Gateway</h2>
+                </div>
+            </div>
+
+                <div class="panel-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        {% bootstrap_form edit_gateway_form %}
+
+                        {% buttons %}
+                            <button type="submit" class="btn btn-primary edit-gateway-button hvr-grow-shadow">
+                                {% bootstrap_icon "check" %}
+                                Save Changes
+                            </button>
+                        {% endbuttons %}
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endblock %}

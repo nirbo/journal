@@ -25,6 +25,9 @@
                             <li>
                                 <a href="#ntp-tab" data-toggle="tab">NTP</a>
                             </li>
+                            <li>
+                                <a href="#gateway-tab" data-toggle="tab">Gateways</a>
+                            </li>
                         </ul>
 
                         <div class="tab-content">
@@ -48,6 +51,17 @@
                                 </p>
 
                                 {% render_table ntp_table %}
+                            </div>
+
+                            <div class="tab-pane" id="gateway-tab">
+                                <p>
+                                    <button class="btn btn-primary add-gateway-button hvr-grow-shadow" type="button" onclick="goToAddGateway('{% url 'journal:add_gateway' %}')">
+                                        {% bootstrap_icon "plus" %}
+                                         Add Gateway
+                                    </button>
+                                </p>
+
+                                {% render_table gateway_table %}
                             </div>
                         </div>
                     </div>

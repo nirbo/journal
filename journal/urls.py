@@ -38,4 +38,7 @@ urlpatterns = [
     url(r'^addNtpServer/$', views.add_ntp_server, name='add_ntp_server'),
     url(r'^editNtpServer/(?P<id>\d+)$', views.edit_ntp_server, name='edit_ntp_server'),
     url(r'^deleteNtpServer/(?P<id>\d+)$', views.delete_ntp_server, name='delete_ntp_server'),
+    url(r'^addGateway/$', views.add_gateway, name='add_gateway'),
+    url(r'^editGateway/(?P<id>\d+)$', views.edit_gateway, name='edit_gateway'),
+    url(r'^deleteGateway/(?P<id>\d+)$', views.delete_gateway, name='delete_gateway'),
 ]
